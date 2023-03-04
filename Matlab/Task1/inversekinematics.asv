@@ -1,0 +1,21 @@
+x = 0;
+y = 0;
+z = 0;
+L1 = 76.5;
+L2 = sqrt(24^2+128^2);
+L3 = 124;
+L4 = 146.6;
+
+
+
+theta1 = atan2(y,x);
+Total = atan2(sqrt(x^2+y^2), z-L1);
+
+Big = sqrt(x^2+y^2) - L4 * sin(Total);
+Girl = z - L1 - L4* cos(Total);
+C3 = (Big^2 + Girl^2 - L2^2 -L3^2)/ 2 * L2 * L3;
+S3_up = sqrt(1 - C3^2);
+S3_down = -S3_up;
+disp()
+alpha3 = atan2(S3_up, C3);
+disp(alpha3)
