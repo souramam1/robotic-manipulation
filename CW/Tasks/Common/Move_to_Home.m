@@ -158,7 +158,7 @@ default_theta1 = 0;
 default_alpha2 = -119.531250;
 default_alpha3 = 130.605469;
 default_alpha4 = 104.589844;
-default_alpha5 = 230;
+default_alpha5 = 88;
 
 % Read present position
 dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);

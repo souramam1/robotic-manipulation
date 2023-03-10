@@ -1,4 +1,4 @@
-function [] = Linear_Movement(pose, x, y, z)
+function [] = Linear_Movement(pose, x, y, z, gripper)
 % Read the position of the dynamixel horn with the torque off
 % The code executes for a given amount of time then terminates
 
@@ -187,38 +187,51 @@ Dx_in1 = [];
 Dx_in2 = [];
 Dx_in3 = [];
 Dx_in4 = [];
+Dx_in5 = [];
+% 
+% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% 
+% encoder_to_degree = 360/4096;
+% 
+% deg5_current = dxl_present_position5* encoder_to_degree;
+% 
+% [alpha5] = cubic_trajectory(deg5_current, 88, time, steps);
+%     
+% for i = 1:steps
+%     Dx_in5 = (alpha5(i))*4096/360;
+%     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+% end
+% 
+% pause(4)
 
-dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% 
+% deg5_current = dxl_present_position5* encoder_to_degree;
+% 
+% [alpha5_close] = cubic_trajectory(deg5_current, 230, time, steps);
+% for i = 1:steps
+%     Dx_in5 = (alpha5_close(i))*4096/360;
+%     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+% end
 
-encoder_to_degree = 360/4096;
-
-deg5_current = dxl_present_position5* encoder_to_degree;
-
-[alpha5] = cubic_trajectory(deg5_current, 88, time, steps);
-    
-for i = 1:steps
-    Dx_in5 = (alpha5(i))*4096/360;
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
-end
-
-pause(4)
-
-dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
-
-deg5_current = dxl_present_position5* encoder_to_degree;
-
-[alpha5_close] = cubic_trajectory(deg5_current, 230, time, steps);
-for i = 1:steps
-    Dx_in5 = (alpha5_close(i))*4096/360;
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
-end
-
-for j = 2:length(x)
+for j = 7:length(x)
     
     [x_des] = cubic_trajectory(x(j-1), x(j), time, steps);
     [y_des] = cubic_trajectory(y(j-1), y(j), time, steps);
     [z_des] = cubic_trajectory(z(j-1), z(j), time, steps);
     
+    dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+    
+    encoder_to_degree = 360/4096;
+
+    deg5_current = dxl_present_position5* encoder_to_degree;
+    
+    [alpha5_close] = cubic_trajectory(deg5_current, gripper(j), time, steps);
+
+    for i = 1:steps
+        Dx_in5 = (alpha5_close(i))*4096/360;
+        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+    end
 
     for i = 1:steps
     
