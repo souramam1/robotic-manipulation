@@ -29,7 +29,7 @@ z_p4 = 100;
 pose_p4 = 90;
 
 % move to pen after after%
-x_p5 = 200;
+x_p5 = 170;
 y_p5 = 0;
 z_p5 = 100;
 pose_p5 = 90;
@@ -69,7 +69,7 @@ open = 88;
 close = 215;
 
 pose = [pose_start, pose_p, pose_p2,pose_p3,pose_p4, pose_1,pose_2,pose_3,pose_4,pose_5];
-x = [x_start,x_p, x_p2, x_p3,x_p4,x_p5 x_1,x_2,x_3,x_4,x_5];
+x = [x_start,x_p, x_p2, x_p3,x_p4,x_p5, x_1,x_2,x_3,x_4,x_5];
 y = [y_start, y_p, y_p2, y_p3,y_p4,y_p5, y_1, y_2, y_3, y_4, y_5];
 z = [z_start, z_p, z_p2, z_p3,z_p4,z_p5, z_1, z_2, z_3, z_4, z_5];
 gripper = [open, open, open,close,close,close, close, close, close, close, close];

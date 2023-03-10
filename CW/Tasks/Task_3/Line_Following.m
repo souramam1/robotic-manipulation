@@ -75,7 +75,7 @@ z = [z_start, z_p, z_p2, z_p3,z_p4,z_p5, z_1, z_2, z_3, z_4, z_5];
 gripper = [open, open, open,close,close,close, close, close, close, close, close];
 
 for i = 1:6
-Move_to_Place(pose(i), x(i), y(i), z(i), gripper(i));
+Move_Cube(pose(i), x(i), y(i), z(i), gripper(i));
 end
 
 Linear_Movement(pose, x, y, z, gripper);
