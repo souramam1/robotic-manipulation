@@ -17,7 +17,7 @@ a3 = -2*(desired_theta - current_theta)/(total_time^3);
 % Generate the trajectory
 num_steps = steps;
 t = linspace(0, total_time, num_steps);
-theta = a0 + a1*t + a2*t.^2 + a3*t.^3;
+theta = real(a0 + a1*t + a2*t.^2 + a3*t.^3);
 % dtheta = a1 + 2*a2*t + 3*a3*t.^2;
 % ddtheta = 2*a2 + 6*a3*t;
 

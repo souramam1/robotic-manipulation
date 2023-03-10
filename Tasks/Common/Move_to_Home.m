@@ -1,4 +1,4 @@
-function [] = Move_to_Start()
+function [] = Move_to_Home()
 
 
 lib_name = '';
@@ -126,7 +126,8 @@ write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQ
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
+% WE DISABLED TORQUE FOR GRIPPER
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, 0);
 
 %----------------------self move--------------------------------------
 
@@ -153,10 +154,10 @@ end
 steps = 50;
 time = 3;
 % Default angles
-default_theta1 = 90;
-default_alpha2 = -65.478516;
-default_alpha3 = 94.218750;
-default_alpha4 = 60.908203;
+default_theta1 = 0;
+default_alpha2 = -119.531250;
+default_alpha3 = 130.605469;
+default_alpha4 = 104.589844;
 default_alpha5 = 230;
 
 % Read present position
@@ -176,6 +177,7 @@ deg3 = dxl_present_position3* encoder_to_degree -90;
 deg4 = dxl_present_position4* encoder_to_degree -180;
 deg5 = dxl_present_position5* encoder_to_degree;
 
+
 theta1_cur = deg1;
 alpha2_cur = deg2;
 alpha3_cur = deg3;
@@ -188,15 +190,6 @@ alpha3_des = default_alpha3;
 alpha4_des = default_alpha4;
 alpha5_des = default_alpha5;
 
-
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_VELOCITY, 200);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_VELOCITY, 200);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_VELOCITY, 200);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 200);
 
 %move_arm(theta1_cur, alpha2_cur, alpha3_cur, alpha4_cur, theta1_des, alpha2_des, alpha3_des, alpha4_des, steps, time);
 
@@ -230,10 +223,12 @@ for i = 1:steps
     
 end
 
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
 
-
-close all;
-clear all;
 
 end
 

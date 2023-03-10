@@ -1,12 +1,15 @@
-function [total_deg, x, y, z] = forward_kinematics(theta1degg, alpha2_vsdegg, alpha3_vsdegg, alpha4degg)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
 L1 = 76.5;
 L2 = sqrt(24^2+128^2);
 L3 = 124;
 L4 = 146.6;
 thetaoffset = atan(24/128);
 % disp(thetaoffset);
+
+theta1degg = 90.087891;
+alpha2_vsdegg = -65.654297;
+alpha3_vsdegg = 94.482422;
+alpha4degg = 61.259766;
+
 
 
 theta1 = theta1degg*pi/180;
@@ -77,8 +80,8 @@ z = T055(3, 4);
 % disp(T055)
 % total = alpha2 + alpha3 + alpha4;
 total_deg = total*180/pi;
-% disp(total_deg)
-% disp(T055(1, 4))
-% disp(T055(2, 4))
-% disp(T055(3, 4))
-end
+
+disp(x)
+disp(y)
+disp(z)
+disp(total_deg)

@@ -1,10 +1,5 @@
-function [outputArg1,outputArg2] = Move_Test(pose, x, y, z)
-% Read the position of the dynamixel horn with the torque off
-% The code executes for a given amount of time then terminates
+function [] = Move_to_Start(pose, x, y, z)
 
-
-clc;
-clear all;
 
 lib_name = '';
 
@@ -153,93 +148,28 @@ elseif dxl_error ~= 0
 else
     fprintf('Dynamixel has been successfully connected \n');
 end
-%--------------------------------SINE MOVING--------------------------------
-% sine function
-%     steps = 400;
-%     t = linspace(0,2*pi,steps);
-%     y = 500*sin(t);
-%     y = y + 2046; % center the sine wave around 2046 encoder counts
-%     z = -500*sin(t);
-%     z = z + 2046;
-
-%     for i = 1:steps
-%        
-%        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(round(y(i))), 'uint32'));
-%        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(round(z(i))), 'uint32'));
-%        %pause(0.001);
-%     end
-%----------------------------------------move linear---------------
-
-steps = 50;
-time = 3;
-
-Dx_in1 = empty(steps);
-Dx_in2 = empty(steps);
-Dx_in3 = empty(steps);
-Dx_in4 = empty(steps);
-
-
-dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position2 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position3 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position4 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
-
-% conversion factors from encoder count to radian and degree
-encoder_to_degree = 360/4096;
-
-% convert encoder counts to angles in degrees
-deg1 = dxl_present_position1 * encoder_to_degree -90;
-deg2 = dxl_present_position2* encoder_to_degree -180;
-deg3 = dxl_present_position3* encoder_to_degree -90;
-deg4 = dxl_present_position4* encoder_to_degree -180;
-% deg5 = dxl_present_position5* encoder_to_degree;
-
-
-[pose_cur, x_cur, y_cur, z_cur] = forward_kinematics(deg1, deg2, deg3, deg4);
-
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_VELOCITY, 200);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_VELOCITY, 200);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_VELOCITY, 200);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_ACCELERATION, 10);
-write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 200);
-
-
-[x_des] = cubic_trajectory(x_cur, x, time, steps);
-[y_des] = cubic_trajectory(y_cur, y, time, steps);
-[z_des] = cubic_trajectory(z_cur, z, time, steps);
-
-for i = 1:steps
-
-    [theta1_des, alpha2_des, alpha3_des, alpha4_des] = inverse_kinematics(x_des(i), y_des(i), z_des(i), pose);
-    
-    Dx_in1(i) = (theta1_des + 90)*4096/360;
-    Dx_in2(i) = (alpha2_des + 180)*4096/360;
-    Dx_in3(i) = (alpha3_des + 90)*4096/360;
-    Dx_in4(i) = (alpha4_des + 180)*4096/360;
-% % % %     Dx_in5 = (alpha5 )*4096/360;
-    
-end
-
-disp(Dx_in1)
-disp(Dx_in2)
-disp(Dx_in3)
-disp(Dx_in4)
-
-for i = 1:steps
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in1(i)), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in2(i)), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in3(i)), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in4(i)), 'uint32'));
-end
-% Generate a set of points along the line with an exponential spacing
-
-
 
 %----------------------------------------move back to default---------------
+steps = 50;
+time = 3;
+% Default angles
+% default_theta1 = 90;
+% default_alpha2 = -65.478516;
+% default_alpha3 = 94.218750;
+% default_alpha4 = 60.908203;
+% default_alpha5 = 230;
+
+[default_theta1, default_alpha2, default_alpha3, default_alpha4] = inverse_kinematics(pose, x, y, z);
+
+default_alpha5 = 150;
+% Coordinates:
+% x   99.6667
+% 
+% y    0.1529
+% 
+% z  259.5405
+% 
+% pose   90.0879
 
 % Read present position
 dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
@@ -258,12 +188,6 @@ deg3 = dxl_present_position3* encoder_to_degree -90;
 deg4 = dxl_present_position4* encoder_to_degree -180;
 deg5 = dxl_present_position5* encoder_to_degree;
 
-fprintf("deg 1!: %f\n", deg1);
-fprintf("deg 2!: %f\n", deg2);
-fprintf("deg 3!: %f\n", deg3);
-fprintf("deg 4!: %f\n", deg4);
-fprintf("deg 5!: %f\n", deg5);
-
 theta1_cur = deg1;
 alpha2_cur = deg2;
 alpha3_cur = deg3;
@@ -276,6 +200,15 @@ alpha3_des = default_alpha3;
 alpha4_des = default_alpha4;
 alpha5_des = default_alpha5;
 
+
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_VELOCITY, 200);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_VELOCITY, 200);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_VELOCITY, 200);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 200);
 
 %move_arm(theta1_cur, alpha2_cur, alpha3_cur, alpha4_cur, theta1_des, alpha2_des, alpha3_des, alpha4_des, steps, time);
 
@@ -309,18 +242,33 @@ for i = 1:steps
     
 end
 
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
+dxl_present_position2 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PRESENT_POSITION);
+dxl_present_position3 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PRESENT_POSITION);
+dxl_present_position4 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PRESENT_POSITION);
+dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
 
-% Close port
-closePort(port_num);
-fprintf('Port Closed \n');
+% conversion factors from encoder count to radian and degree
+encoder_to_degree = 360/4096;
 
-% Unload Library
-unloadlibrary(lib_name);
+% convert encoder counts to angles in degrees
+deg1 = dxl_present_position1 * encoder_to_degree -90;
+deg2 = dxl_present_position2* encoder_to_degree -180;
+deg3 = dxl_present_position3* encoder_to_degree -90;
+deg4 = dxl_present_position4* encoder_to_degree -180;
+deg5 = dxl_present_position5* encoder_to_degree;
+
+% fprintf("deg1: %f\n", deg1);
+% fprintf("deg2: %f\n", deg2);
+% fprintf("deg3: %f\n", deg3);
+% fprintf("deg4: %f\n", deg4);
+
+[pose, x, y, z] = forward_kinematics(deg1, deg2, deg3, deg4);
+
+% fprintf("pose: %f\n", pose);
+% fprintf("x: %f\n", x);
+% fprintf("y: %f\n", y);
+% fprintf("z: %f\n", z);
 
 close all;
 clear all;

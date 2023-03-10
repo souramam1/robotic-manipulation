@@ -1,4 +1,4 @@
-function [theta_1_deg, alpha2_deg, alpha3_deg, alpha4_deg] = inverse_kinematics(x, y, z, pose_deg)
+function [theta_1_deg, alpha2_deg, alpha3_deg, alpha4_deg] = inverse_kinematics(pose_deg, x, y, z)
 %INVERSE_KINEMATICS Summary of this function goes here
 %   Detailed explanation goes here
 % INPUT X,Y,Z and POSE of end EFFECTOR
@@ -17,11 +17,15 @@ ang_offset = atan(Loff/L2_short);
 ang_offset_deg = ang_offset*180/pi;
 % fprintf("ang_offset = %f\n",ang_offset_deg);
 
+p_tot = sqrt(x^2 + y^2);
+
 %calibration for offset
-z = z - 18;
+z_offset = 27 - 8/106.1*(p_tot);
+% fprintf("z_offset %f\n", z_offset);
+z = z - z_offset;
 
 %%%
-p_tot = sqrt(x^2 + y^2);
+
 z_tot = z - L1;
 % fprintf("p_tot =  %f\n", p_tot);
 % fprintf("z_tot =  %f\n", z_tot);
@@ -63,10 +67,17 @@ alpha2_in_calc_rad = gamma-beta_up;
 
 alpha3_deg = (acos(((p2^2+z2^2) - (L2^2 + L3^2))/(2*L2*L3)))*180/pi;
 alpha2_in_calc_deg = (gamma-beta_up)*180/pi;
-alpha4_deg = pose_deg - alpha3_deg - alpha2_in_calc_deg;
+
+alpha2_deg = alpha2_in_calc_deg - ang_offset_deg;
+alpha4_deg = pose_deg - alpha3_deg - alpha2_deg;
+
+
 % This is the alpha 2 that needs to be fed in but calculating the correct
 % alpha 4 requires using the offsetted alpha2
-alpha2_deg = alpha2_in_calc_deg - ang_offset_deg;
+
+% alpha4 not w offset
+% alpha4_deg = pose_deg - alpha3_deg - alpha2_in_calc_deg;
+% alpha2_deg = alpha2_in_calc_deg - ang_offset_deg;
 
 % BOUNDS ON ALPHAS 
 % alpha2_lb = -120.4;
