@@ -17,26 +17,26 @@ z_1 = 60;
 pose_1 = 180;
 
 % end of 1st line %
-x_2 = 5   *25;
-y_2 = -1   *25;
+x_2 = -1   *25;
+y_2 = 5   *25;
 z_2 = z_1;
 pose_2 = pose_1;
 
 % end of 2nd line %
-x_3 = 2   *25;
-y_3 = -1   *25;
+x_3 = -1   *25;
+y_3 = 2   *25;
 z_3 = z_1;
 pose_3 = pose_1;
 
 % end of 3rd line (diagonal before circle) %
-x_4 = 4   *25;
-y_4 = -3   *25;
+x_4 = 1   *25;
+y_4 = 4   *25;
 z_4 = z_1;
 pose_4 = pose_1;
 
 % end of circle %
-x_5 = 4   *25;
-y_5 = -5   *25;
+x_5 = 0   *25;
+y_5 = 0   *25;
 z_5 = z_1;
 pose_5 = pose_1;
 
