@@ -16,7 +16,7 @@ start_g2 = close;
 
 start_x3 = 150;
 start_y3 = 150;
-start_z3 = z_vert + 5;
+start_z3 = z_vert; %+ 5;
 start_p3 = 175;
 start_g3 = close;
 
@@ -31,13 +31,14 @@ end_g1 = close;
 
 end_x2 = 90;
 end_y2 = 0;
-end_z2 = z_end-5;
+end_z2 = z_end; %-5;
 end_p2 = 180;
 end_g2 = close;
 
 
 end_x3 = 0;
-end_y3 = 93;
+end_y3 = 100;
+% end_y3 = 93;
 end_z3 = z_end;
 end_p3 = 180;
 end_g3 = close;
@@ -53,7 +54,7 @@ for i = 1:3
     Cx_1 = [x1_hov,start_x1,start_x1,x1_hov, end_x1_hov, end_x1, end_x1 end_x1_hov];
     Cy_1 = [y1_hov,start_y1,start_y1,y1_hov, end_y1_hov, end_y1, end_y1, end_y1_hov];
     Cz_1 = [z1_hov,start_z1,start_z1,z1_hov, end_z1_hov, end_z1, end_z1, end_z1_hov];
-Cgripper_1 = [open,open,close,close, close, close, open, open];
+    Cgripper_1 = [open,open,close,close, close, close, open, open];
 end
 
 for i = 1:8
@@ -74,7 +75,7 @@ Cgripper_2 = [open,open,close,close, close, close, open, open];
 end
 
 for i = 1:8
-Move_Cube(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i));
+    Move_Cube(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i));
 end
 
 
@@ -92,7 +93,7 @@ for i = 1:3
 end
 
 for i = 1:8
-Move_Cube(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i));
+    Move_Cube(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i));
 end
 
 

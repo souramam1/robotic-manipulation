@@ -41,7 +41,7 @@ DXL_ID4                      = 14;
 DXL_ID5                      = 15;
 
 BAUDRATE                    = 115200;
-DEVICENAME                  = '/dev/tty.usbserial-FT6RW7G5';       % Check which port is being used on your controller
+DEVICENAME                  = '/dev/tty.usbserial-FT5WJ63F';       % Check which port is being used on your controller
                                             % ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque

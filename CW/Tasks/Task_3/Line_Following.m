@@ -1,13 +1,13 @@
 % move to start %
 x_start = 100;
 y_start = 0;
-z_start = 100;
+z_start = 200;
 pose_start = 180;
 
 % move to pen above %
 x_p = 0;
 y_p = 225;
-z_p = 100;
+z_p = 200;
 pose_p = 90;
 
 % move to pen actual%
@@ -32,53 +32,61 @@ pose_p4 = 90;
 x_p5 = 170;
 y_p5 = 0;
 z_p5 = 100;
-pose_p5 = 90;
+pose_p5 = 180;
 
 % before 1st line %
-x_1 = 175;
-y_1 = 0;
-z_1 = 75;
+x_1 = 200;
+y_1 = 60;
+z_1 = 72;
 pose_1 = 180;
 
 % end of 1st line %
-x_2 = 175;
-y_2 = -50;
+x_2 = 200;
+y_2 = 140;
 z_2 = z_1;
 pose_2 = pose_1;
 
 % end of 2nd line %
 x_3 = 125;
-y_3 = -50;
+y_3 = 50;
 z_3 = z_1;
 pose_3 = pose_1;
 
 % end of 3rd line (diagonal before circle) %
 x_4 = 175;
-y_4 = -100;
+y_4 = 100;
 z_4 = z_1;
 pose_4 = pose_1;
 
 % end of circle %
-x_5 = 125;
-y_5 = -150;
+x_5 = 175;
+y_5 = 100;
 z_5 = z_1;
 pose_5 = pose_1;
 
 
 open = 88;
-close = 215;
+close = 205;
 
-pose = [pose_start, pose_p, pose_p2,pose_p3,pose_p4, pose_1,pose_2,pose_3,pose_4,pose_5];
+pose = [pose_start, pose_p, pose_p2,pose_p3,pose_p4, pose_p5, pose_1,pose_2,pose_3,pose_4,pose_5];
 x = [x_start,x_p, x_p2, x_p3,x_p4,x_p5, x_1,x_2,x_3,x_4,x_5];
 y = [y_start, y_p, y_p2, y_p3,y_p4,y_p5, y_1, y_2, y_3, y_4, y_5];
 z = [z_start, z_p, z_p2, z_p3,z_p4,z_p5, z_1, z_2, z_3, z_4, z_5];
 gripper = [open, open, open,close,close,close, close, close, close, close, close];
+
+disp(length(x))
+disp(length(y))
+disp(length(z))
+disp(length(pose))
+disp(length(gripper))
 
 for i = 1:6
 Move_Cube(pose(i), x(i), y(i), z(i), gripper(i));
 end
 
 Linear_Movement(pose, x, y, z, gripper);
+
+circular_movement(pose_5, x_5, y_5, z_5, close, 40, 90, 270);
 
 Move_to_Home();
 

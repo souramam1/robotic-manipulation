@@ -41,8 +41,8 @@ DXL_ID4                      = 14;
 DXL_ID5                      = 15;
 
 BAUDRATE                    = 115200;
-DEVICENAME                  = '/dev/tty.usbserial-FT6RW7G5';       % Check which port is being used on your controller
-                                            % ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
+DEVICENAME                  = '/dev/tty.usbserial-FT5WJ63F';       % Check which port is being used on your controller
+                                            %FT5WJ63F ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
 TORQUE_DISABLE              = 0;            % Value for disabling the torque
@@ -150,7 +150,8 @@ else
 end
 
 %----------------------------------------move back to default---------------
-steps = 15;
+%CHANGE TO 15 FOR CUBES 
+steps = 30;
 time = 3;
 % Default angles
 % default_theta1 = 90;

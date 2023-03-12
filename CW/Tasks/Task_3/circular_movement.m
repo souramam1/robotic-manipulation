@@ -1,4 +1,4 @@
-function [] = Linear_Movement(pose, x, y, z, gripper)
+function [] = circular_movement(pose, x, y, z, gripper, radius, start_angle, end_angle)
 % Read the position of the dynamixel horn with the torque off
 % The code executes for a given amount of time then terminates
 
@@ -188,78 +188,51 @@ Dx_in2 = [];
 Dx_in3 = [];
 Dx_in4 = [];
 Dx_in5 = [];
-% 
+
+
+    
+[x_des, y_des] = circle_trajectory(radius, x, y, time, steps, start_angle, end_angle);
+
+
 % dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
 % 
 % encoder_to_degree = 360/4096;
 % 
 % deg5_current = dxl_present_position5* encoder_to_degree;
 % 
-% [alpha5] = cubic_trajectory(deg5_current, 88, time, steps);
-%     
-% for i = 1:steps
-%     Dx_in5 = (alpha5(i))*4096/360;
-%     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
-% end
-% 
-% pause(4)
+% [alpha5_close] = cubic_trajectory(deg5_current, gripper(j), time, steps);
 
-% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
-% 
-% deg5_current = dxl_present_position5* encoder_to_degree;
-% 
-% [alpha5_close] = cubic_trajectory(deg5_current, 230, time, steps);
 % for i = 1:steps
 %     Dx_in5 = (alpha5_close(i))*4096/360;
 %     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
 % end
 
-for j = 7:length(x)
-    
-    [x_des] = cubic_trajectory(x(j-1), x(j), time, steps);
-    [y_des] = cubic_trajectory(y(j-1), y(j), time, steps);
-    [z_des] = cubic_trajectory(z(j-1), z(j), time, steps);
-    
-    dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
-    
-    encoder_to_degree = 360/4096;
+for i = 1:steps
 
-    deg5_current = dxl_present_position5* encoder_to_degree;
+    [theta1_des, alpha2_des, alpha3_des, alpha4_des] = inverse_kinematics(pose, x_des(i), y_des(i), z);
     
-    [alpha5_close] = cubic_trajectory(deg5_current, gripper(j), time, steps);
+    Dx_in1(i) = (theta1_des + 90)*4096/360;
+    Dx_in2(i) = (alpha2_des + 180)*4096/360;
+    Dx_in3(i) = (alpha3_des + 90)*4096/360;
+    Dx_in4(i) = (alpha4_des + 180)*4096/360;
 
-    for i = 1:steps
-        Dx_in5 = (alpha5_close(i))*4096/360;
-        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
-    end
-
-    for i = 1:steps
-    
-        [theta1_des, alpha2_des, alpha3_des, alpha4_des] = inverse_kinematics(pose(j), x_des(i), y_des(i), z_des(i));
         
-        Dx_in1(i) = (theta1_des + 90)*4096/360;
-        Dx_in2(i) = (alpha2_des + 180)*4096/360;
-        Dx_in3(i) = (alpha3_des + 90)*4096/360;
-        Dx_in4(i) = (alpha4_des + 180)*4096/360;
-
-            
-    end
-    
-    
-    
-    for i = 1:steps
-        if i == 1
-            fprintf("IN MOVEMENT FOR LOOP");
-        end
-        write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in1(i))), 'uint32'));
-        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in2(i))), 'uint32'));
-        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in3(i))), 'uint32'));
-        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in4(i))), 'uint32'));
-    end
-    % Generate a set of points along the line with an exponential spacing
-    pause(1);
-
 end
+
+
+
+for i = 1:steps
+    if i == 1
+        fprintf("IN MOVEMENT FOR LOOP");
+    end
+    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in1(i))), 'uint32'));
+    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in2(i))), 'uint32'));
+    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in3(i))), 'uint32'));
+    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in4(i))), 'uint32'));
+end
+% Generate a set of points along the line with an exponential spacing
+pause(1);
+
 
 
 
@@ -275,4 +248,6 @@ clear all;
 
 
 end
+
+
 
