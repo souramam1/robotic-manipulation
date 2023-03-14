@@ -1,10 +1,4 @@
 function [X,Y] = circle_trajectory(radius, x0, y0, total_time, steps, start_angle, end_angle)
-% CUBIC_TRAJECTORY generates a cubic trajectory for a robot arm
-%   [THETA] = CUBIC_TRAJECTORY(CURRENT_THETA, DESIRED_THETA, TOTAL_TIME)
-%   generates a cubic trajectory between the current angle CURRENT_THETA
-%   and the desired angle DESIRED_THETA, with a total duration of TOTAL_TIME.
-%
-%   THETA is a vector of joint angles at each time increment.
 
 x_centre = x0 - radius * cosd(start_angle);
 

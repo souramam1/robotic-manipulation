@@ -37,8 +37,8 @@ end_g2 = close;
 
 
 end_x3 = 0;
-end_y3 = 100;
-% end_y3 = 93;
+% end_y3 = 100;
+end_y3 = 93;
 end_z3 = z_end;
 end_p3 = 180;
 end_g3 = close;
@@ -55,10 +55,11 @@ for i = 1:3
     Cy_1 = [y1_hov,start_y1,start_y1,y1_hov, end_y1_hov, end_y1, end_y1, end_y1_hov];
     Cz_1 = [z1_hov,start_z1,start_z1,z1_hov, end_z1_hov, end_z1, end_z1, end_z1_hov];
     Cgripper_1 = [open,open,close,close, close, close, open, open];
+    C_steps_1 = [15, 30, 10, 15, 15, 30, 10, 15];
 end
 
 for i = 1:8
-Move_Cube(Cpose_1(i), Cx_1(i), Cy_1(i), Cz_1(i), Cgripper_1(i));
+    move_cube_task_2(Cpose_1(i), Cx_1(i), Cy_1(i), Cz_1(i), Cgripper_1(i), C_steps_1(i));
 end
 
 
@@ -71,11 +72,12 @@ for i = 1:3
     Cx_2 = [x2_hov,start_x2,start_x2,x2_hov, end_x2_hov, end_x2, end_x2 end_x2_hov];
     Cy_2 = [y2_hov,start_y2,start_y2,y2_hov, end_y2_hov, end_y2, end_y2, end_y2_hov];
     Cz_2 = [z2_hov,start_z2,start_z2,z2_hov, end_z2_hov, end_z2, end_z2, end_z2_hov];
-Cgripper_2 = [open,open,close,close, close, close, open, open];
+    Cgripper_2 = [open,open,close,close, close, close, open, open];
+    C_steps_2 = [15, 30, 10, 15, 15, 30, 10, 15];
 end
 
 for i = 1:8
-    Move_Cube(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i));
+    move_cube_task_2(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i), C_steps_2(i));
 end
 
 
@@ -90,10 +92,11 @@ for i = 1:3
     Cy_3 = [y3_hov,start_y3,start_y3,y3_hov, end_y3_hov, end_y3, end_y3, end_y3_hov];
     Cz_3 = [z3_hov,start_z3,start_z3,z3_hov, end_z3_hov, end_z3, end_z3, end_z3_hov];
     Cgripper_3 = [open,open,close,close, close, close, open, open];
+    C_steps_3 = [15, 30, 10, 15, 15, 30, 10, 15];
 end
 
 for i = 1:8
-    Move_Cube(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i));
+    move_cube_task_2(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i), C_steps_3(i));
 end
 
 

@@ -1,4 +1,4 @@
-function [] = Move_to_Home()
+function [] = move_cube_task_2(pose, x, y, z, grip, steps)
 
 
 lib_name = '';
@@ -42,7 +42,7 @@ DXL_ID5                      = 15;
 
 BAUDRATE                    = 115200;
 DEVICENAME                  = '/dev/tty.usbserial-FT5NSOFA';       % Check which port is being used on your controller
-                                            % ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
+                                            %FT5WJ63F ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
 TORQUE_DISABLE              = 0;            % Value for disabling the torque
@@ -126,8 +126,7 @@ write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQ
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-% WE DISABLED TORQUE FOR GRIPPER
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, 0);
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 
 %----------------------self move--------------------------------------
 
@@ -151,14 +150,26 @@ else
 end
 
 %----------------------------------------move back to default---------------
-steps = 50;
+%CHANGE TO 15 FOR CUBES 
 time = 3;
 % Default angles
-default_theta1 = 180;
-default_alpha2 = -119.531250;
-default_alpha3 = 130.605469;
-default_alpha4 = 104.589844;
-default_alpha5 = 88;
+% default_theta1 = 90;
+% default_alpha2 = -65.478516;
+% default_alpha3 = 94.218750;
+% default_alpha4 = 60.908203;
+% default_alpha5 = 230;
+
+[default_theta1, default_alpha2, default_alpha3, default_alpha4] = inverse_kinematics(pose, x, y, z);
+
+default_alpha5 = grip;
+% Coordinates:
+% x   99.6667
+% 
+% y    0.1529
+% 
+% z  259.5405
+% 
+% pose   90.0879
 
 % Read present position
 dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
@@ -177,7 +188,6 @@ deg3 = dxl_present_position3* encoder_to_degree -90;
 deg4 = dxl_present_position4* encoder_to_degree -180;
 deg5 = dxl_present_position5* encoder_to_degree;
 
-
 theta1_cur = deg1;
 alpha2_cur = deg2;
 alpha3_cur = deg3;
@@ -190,6 +200,15 @@ alpha3_des = default_alpha3;
 alpha4_des = default_alpha4;
 alpha5_des = default_alpha5;
 
+
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_VELOCITY, 200);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PROFILE_VELOCITY, 200);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_VELOCITY, 200);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_ACCELERATION, 10);
+write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 200);
 
 %move_arm(theta1_cur, alpha2_cur, alpha3_cur, alpha4_cur, theta1_des, alpha2_des, alpha3_des, alpha4_des, steps, time);
 
@@ -223,12 +242,37 @@ for i = 1:steps
     
 end
 
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+% dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position2 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position3 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position4 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% 
+% % conversion factors from encoder count to radian and degree
+% encoder_to_degree = 360/4096;
+% 
+% % convert encoder counts to angles in degrees
+% deg1 = dxl_present_position1 * encoder_to_degree -90;
+% deg2 = dxl_present_position2* encoder_to_degree -180;
+% deg3 = dxl_present_position3* encoder_to_degree -90;
+% deg4 = dxl_present_position4* encoder_to_degree -180;
+% deg5 = dxl_present_position5* encoder_to_degree;
+% 
+% % fprintf("deg1: %f\n", deg1);
+% % fprintf("deg2: %f\n", deg2);
+% % fprintf("deg3: %f\n", deg3);
+% % fprintf("deg4: %f\n", deg4);
+% 
+% [pose, x, y, z] = forward_kinematics(deg1, deg2, deg3, deg4);
 
+% fprintf("pose: %f\n", pose);
+% fprintf("x: %f\n", x);
+% fprintf("y: %f\n", y);
+% fprintf("z: %f\n", z);
+
+close all;
+clear all;
 
 end
+
 

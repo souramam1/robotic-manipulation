@@ -41,7 +41,7 @@ DXL_ID4                      = 14;
 DXL_ID5                      = 15;
 
 BAUDRATE                    = 115200;
-DEVICENAME                  = '/dev/tty.usbserial-FT5WJ63F';       % Check which port is being used on your controller
+DEVICENAME                  = '/dev/tty.usbserial-FT5NSOFA';       % Check which port is being used on your controller
                                             %FT5WJ63F ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
@@ -243,28 +243,28 @@ for i = 1:steps
     
 end
 
-dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position2 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position3 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position4 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
-
-% conversion factors from encoder count to radian and degree
-encoder_to_degree = 360/4096;
-
-% convert encoder counts to angles in degrees
-deg1 = dxl_present_position1 * encoder_to_degree -90;
-deg2 = dxl_present_position2* encoder_to_degree -180;
-deg3 = dxl_present_position3* encoder_to_degree -90;
-deg4 = dxl_present_position4* encoder_to_degree -180;
-deg5 = dxl_present_position5* encoder_to_degree;
-
-% fprintf("deg1: %f\n", deg1);
-% fprintf("deg2: %f\n", deg2);
-% fprintf("deg3: %f\n", deg3);
-% fprintf("deg4: %f\n", deg4);
-
-[pose, x, y, z] = forward_kinematics(deg1, deg2, deg3, deg4);
+% dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position2 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position3 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position4 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% 
+% % conversion factors from encoder count to radian and degree
+% encoder_to_degree = 360/4096;
+% 
+% % convert encoder counts to angles in degrees
+% deg1 = dxl_present_position1 * encoder_to_degree -90;
+% deg2 = dxl_present_position2* encoder_to_degree -180;
+% deg3 = dxl_present_position3* encoder_to_degree -90;
+% deg4 = dxl_present_position4* encoder_to_degree -180;
+% deg5 = dxl_present_position5* encoder_to_degree;
+% 
+% % fprintf("deg1: %f\n", deg1);
+% % fprintf("deg2: %f\n", deg2);
+% % fprintf("deg3: %f\n", deg3);
+% % fprintf("deg4: %f\n", deg4);
+% 
+% [pose, x, y, z] = forward_kinematics(deg1, deg2, deg3, deg4);
 
 % fprintf("pose: %f\n", pose);
 % fprintf("x: %f\n", x);
