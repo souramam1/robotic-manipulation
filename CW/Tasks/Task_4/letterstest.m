@@ -1,37 +1,37 @@
-% % % Define start position
-% % namex_1 = 0;
-% % namey_1 = 0;
-% % namez_1 = 150;
-% % 
-% % % Define letter size
-% % letter_size = 50;
-% % 
-% % % Generate coordinates for first line of A
-% % namex_2 = namex_1 + letter_size/2;
-% % namey_2 = namey_1 + letter_size;
-% % namez_2 = namez_1;
-% % 
-% % % Generate coordinates for second line of A
-% % namex_3 = namex_2 + letter_size/2;
-% % namey_3 = namey_2 - letter_size;
-% % namez_3 = namez_2;
-% % 
-% % % Generate coordinates for third line of A
-% % namex_4 = namex_3 - letter_size/4;
-% % namey_4 = namey_2 - letter_size/2;
-% % namez_4 = namez_3;
-% % 
-% % namex_5 = namex_4 - letter_size/2;
-% % namey_5 = namey_4;
-% % namez_5 = namez_4;
-% % 
-% % 
-% % % Plot the lines of the letter A
-% % plot3([namex_1 namex_2],[namey_1 namey_2],[namez_1 namez_2],'k','LineWidth',2);
-% % hold on;
-% % plot3([namex_2 namex_3],[namey_2 namey_3],[namez_2 namez_3],'k','LineWidth',2);
-% % plot3([namex_3 namex_4],[namey_3 namey_4],[namez_3 namez_4],'k','LineWidth',2);
-% % plot3([namex_4 namex_5],[namey_4 namey_5],[namez_4 namez_5],'k','LineWidth',2);
+% Define start position
+namex_1 = 0;
+namey_1 = 0;
+namez_1 = 150;
+
+% Define letter size
+letter_size = 50;
+
+% Generate coordinates for first line of A
+namex_2 = namex_1 + letter_size/2;
+namey_2 = namey_1 + letter_size;
+namez_2 = namez_1;
+
+% Generate coordinates for second line of A
+namex_3 = namex_2 + letter_size/2;
+namey_3 = namey_2 - letter_size;
+namez_3 = namez_2;
+
+% Generate coordinates for third line of A
+namex_4 = namex_3 - letter_size/4;
+namey_4 = namey_2 - letter_size/2;
+namez_4 = namez_3;
+
+namex_5 = namex_4 - letter_size/2;
+namey_5 = namey_4;
+namez_5 = namez_4;
+
+
+% Plot the lines of the letter A
+plot3([namex_1 namex_2],[namey_1 namey_2],[namez_1 namez_2],'k','LineWidth',2);
+hold on;
+plot3([namex_2 namex_3],[namey_2 namey_3],[namez_2 namez_3],'k','LineWidth',2);
+plot3([namex_3 namex_4],[namey_3 namey_4],[namez_3 namez_4],'k','LineWidth',2);
+plot3([namex_4 namex_5],[namey_4 namey_5],[namez_4 namez_5],'k','LineWidth',2);
 % % 
 % % % Set axis limits and labels
 % % axis equal;

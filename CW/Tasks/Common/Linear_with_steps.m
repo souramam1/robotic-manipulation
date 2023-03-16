@@ -1,6 +1,11 @@
-function [] = Move_to_Home(port_num)
+function [] = Linear_with_steps(pose, x, y, z, gripper, steps, x_start, y_start, z_start, port_num)
+% Read the position of the dynamixel horn with the torque off
+% The code executes for a given amount of time then terminates
 
 
+% % clc;
+% % clear all;
+% 
 % lib_name = '';
 % 
 % if strcmp(computer, 'PCWIN')
@@ -20,8 +25,8 @@ function [] = Move_to_Home(port_num)
 %     [notfound, warnings] = loadlibrary(lib_name, 'dynamixel_sdk.h', 'addheader', 'port_handler.h', 'addheader', 'packet_handler.h');
 % end
 % 
-% %% ---- Control Table Addresses ---- %%
-% 
+%% ---- Control Table Addresses ---- %%
+
 ADDR_PRO_TORQUE_ENABLE       = 64;           % Control table address is different in Dynamixel model
 ADDR_PRO_GOAL_POSITION       = 116; 
 ADDR_PRO_PRESENT_POSITION    = 132; 
@@ -41,7 +46,7 @@ DXL_ID4                      = 14;
 DXL_ID5                      = 15;
 
 BAUDRATE                    = 115200;
-DEVICENAME                  = '/dev/tty.usbserial-FT5NSOFA';       % Check which port is being used on your controller
+% DEVICENAME                  = '/dev/tty.usbserial-FT5NSOFA';       % Check which port is being used on your controller
                                             % ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
@@ -54,8 +59,8 @@ ESC_CHARACTER               = 'e';          % Key for escaping loop
 
 COMM_SUCCESS                = 0;            % Communication Success result value
 COMM_TX_FAIL                = -1001;        % Communication Tx Failed
-% 
-% %% ------------------ %%
+
+%% ------------------ %%
 % 
 % % Initialize PortHandler Structs
 % % Set the port path
@@ -112,7 +117,7 @@ COMM_TX_FAIL                = -1001;        % Communication Tx Failed
 %     input('Press any key to terminate...\n');
 %     return;
 % end
-% 
+
 % % Put actuator into Position Control Mode
 % write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_OPERATING_MODE, 3);
 % write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_OPERATING_MODE, 3);
@@ -127,29 +132,28 @@ COMM_TX_FAIL                = -1001;        % Communication Tx Failed
 % write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 % write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 % write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
+% 
+% %----------------------self move--------------------------------------
+% 
+% %  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
+% %  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
+% %  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
+% %  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
+% %  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
+% 
+% 
+% 
+% dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
+% dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
+% 
+% if dxl_comm_result ~= COMM_SUCCESS
+%     fprintf('%s\n', getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
+% elseif dxl_error ~= 0
+%     fprintf('%s\n', getRxPacketError(PROTOCOL_VERSION, dxl_error));
+% else
+%     fprintf('Dynamixel has been successfully connected \n');
+% end
 
-%----------------------self move--------------------------------------
-
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-
-
-
-dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
-dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
-
-if dxl_comm_result ~= COMM_SUCCESS
-    fprintf('%s\n', getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
-elseif dxl_error ~= 0
-    fprintf('%s\n', getRxPacketError(PROTOCOL_VERSION, dxl_error));
-else
-    fprintf('Dynamixel has been successfully connected \n');
-end
-
-%----------------------------------------move back to default---------------
 
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_ACCELERATION, 10);
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_VELOCITY, 200);
@@ -159,85 +163,114 @@ write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_ACCELERATIO
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_VELOCITY, 200);
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_ACCELERATION, 10);
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 200);
+%--------------------------------SINE MOVING--------------------------------
+% sine function
+%     steps = 400;
+%     t = linspace(0,2*pi,steps);
+%     y = 500*sin(t);
+%     y = y + 2046; % center the sine wave around 2046 encoder counts
+%     z = -500*sin(t);
+%     z = z + 2046;
 
-steps = 50;
+%     for i = 1:steps
+%        
+%        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(round(y(i))), 'uint32'));
+%        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(round(z(i))), 'uint32'));
+%        %pause(0.001);
+%     end
+%----------------------------------------move linear---------------
+
 time = 3;
-% Default angles
-default_theta1 = 88.769531;
-default_alpha2 = -118.125000;
-default_alpha3 = 134.560547;
-default_alpha4 = 100.810547;
-default_alpha5 = 215;
 
+Dx_in1 = [];
+Dx_in2 = [];
+Dx_in3 = [];
+Dx_in4 = [];
+Dx_in5 = [];
+% 
+% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% 
+% encoder_to_degree = 360/4096;
+% 
+% deg5_current = dxl_present_position5* encoder_to_degree;
+% 
+% [alpha5] = cubic_trajectory(deg5_current, 88, time, steps);
+%     
+% for i = 1:steps
+%     Dx_in5 = (alpha5(i))*4096/360;
+%     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+% end
+% 
+% pause(4)
 
-% Read present position
-dxl_present_position1 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position2 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position3 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position4 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PRESENT_POSITION);
-dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+% 
+% deg5_current = dxl_present_position5* encoder_to_degree;
+% 
+% [alpha5_close] = cubic_trajectory(deg5_current, 230, time, steps);
+% for i = 1:steps
+%     Dx_in5 = (alpha5_close(i))*4096/360;
+%     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+% end
 
-% conversion factors from encoder count to radian and degree
-encoder_to_degree = 360/4096;
-
-% convert encoder counts to angles in degrees
-deg1 = dxl_present_position1 * encoder_to_degree -90;
-deg2 = dxl_present_position2 * encoder_to_degree -180;
-deg3 = dxl_present_position3 * encoder_to_degree -90;
-deg4 = dxl_present_position4 * encoder_to_degree -180;
-deg5 = dxl_present_position5 * encoder_to_degree;
-
-
-theta1_cur = deg1;
-alpha2_cur = deg2;
-alpha3_cur = deg3;
-alpha4_cur = deg4;
-alpha5_cur = deg5;
-
-theta1_des = default_theta1;
-alpha2_des = default_alpha2;
-alpha3_des = default_alpha3;
-alpha4_des = default_alpha4;
-alpha5_des = default_alpha5;
-
-
-%move_arm(theta1_cur, alpha2_cur, alpha3_cur, alpha4_cur, theta1_des, alpha2_des, alpha3_des, alpha4_des, steps, time);
-
-[current_theta, desired_theta, total_time] = deal(theta1_cur, theta1_des, time);
-[theta1] = cubic_trajectory(current_theta, desired_theta, total_time, steps);
-
-[current_theta, desired_theta, total_time] = deal(alpha2_cur, alpha2_des, time);
-[alpha2] = cubic_trajectory(current_theta, desired_theta, total_time, steps);
-
-[current_theta, desired_theta, total_time] = deal(alpha3_cur, alpha3_des, time);
-[alpha3] = cubic_trajectory(current_theta, desired_theta, total_time, steps);
-
-[current_theta, desired_theta, total_time] = deal(alpha4_cur, alpha4_des, time);
-[alpha4] = cubic_trajectory(current_theta, desired_theta, total_time, steps);
-
-[current_theta, desired_theta, total_time] = deal(alpha5_cur, alpha5_des, time);
-[alpha5] = cubic_trajectory(current_theta, desired_theta, total_time, steps);
-
-
-for i = 1:steps
-    Dx_in1 = (theta1(i) + 90)*4096/360;
-    Dx_in2 = (alpha2(i) + 180)*4096/360;
-    Dx_in3 = (alpha3(i) + 90)*4096/360;
-    Dx_in4 = (alpha4(i) + 180)*4096/360;
-    Dx_in5 = (alpha5(i))*4096/360;
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in1), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in2), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in3), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in4), 'uint32'));
-    write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+for j = 1:length(x)
     
+    [x_des] = cubic_trajectory(x_start, x(j), time, steps);
+    [y_des] = cubic_trajectory(y_start, y(j), time, steps);
+    [z_des] = cubic_trajectory(z_start, z(j), time, steps);
+    
+    dxl_present_position5 = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_PRESENT_POSITION);
+    
+    encoder_to_degree = 360/4096;
+
+    deg5_current = dxl_present_position5* encoder_to_degree;
+    
+    [alpha5_close] = cubic_trajectory(deg5_current, gripper(j), time, steps);
+
+    for i = 1:steps
+        Dx_in5 = (alpha5_close(i))*4096/360;
+        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
+    end
+
+    for i = 1:steps
+    
+        [theta1_des, alpha2_des, alpha3_des, alpha4_des] = inverse_kinematics(pose(j), x_des(i), y_des(i), z_des(i));
+        
+        Dx_in1(i) = (theta1_des + 90)*4096/360;
+        Dx_in2(i) = (alpha2_des + 180)*4096/360;
+        Dx_in3(i) = (alpha3_des + 90)*4096/360;
+        Dx_in4(i) = (alpha4_des + 180)*4096/360;
+
+            
+    end
+    
+    
+    
+    for i = 1:steps
+        if i == 1
+            fprintf("IN MOVEMENT FOR LOOP");
+        end
+        write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in1(i))), 'uint32'));
+        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in2(i))), 'uint32'));
+        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in3(i))), 'uint32'));
+        write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in4(i))), 'uint32'));
+    end
+    % Generate a set of points along the line with an exponential spacing
+    pause(1);
+
 end
 
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+
+
+% % Close port
+% closePort(port_num);
+% fprintf('Port Closed \n');
+% 
+% % Unload Library
+% unloadlibrary(lib_name);
+
+% close all;
+% clear all;
 
 
 end

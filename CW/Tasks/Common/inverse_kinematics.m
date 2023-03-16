@@ -40,7 +40,7 @@ z2 = z_tot - L4*cos(pose_rad);
 % ANGLES RADIANS (unless specified otherwise in this section)
 
 % theta1
-theta_1_deg = atan(y/x)*180/pi + 90;
+theta_1_deg = atan2(y,x)*180/pi + 90;
 
 % alpha3
 alpha3_up = (acos(((p2^2+z2^2) - (L2^2 + L3^2))/(2*L2*L3)));

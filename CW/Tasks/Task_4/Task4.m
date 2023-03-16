@@ -1,8 +1,8 @@
 clearvars;
 open = 88;
-close = 215;
+close = 230;
 % SETUP FUNCTION
-setup();
+port_num = setup();
 
 % % % Ring Bell
 % Create an empty struct to hold the bell data
@@ -15,8 +15,6 @@ bellData.z(end+1) = 150;
 bellData.p(end+1) = 180;
 bellData.g(end+1) = open;
 bellData.speed(end+1) = 10;
-
-
 
 % Go down to bell
 bellData(end+1).x = bellData(end).x;
@@ -44,12 +42,12 @@ bellData(end).g = bellData(end-1).g;
 bellData(end).speed = 20;
 
 % % Ring bell loop - it will just go between 2 poses n times
-for i = 1:3
+for i = 1:2
     % Ring bell position 1
     bellData(end+1).x = bellData(end).x;
     bellData(end).y = bellData(end-1).y;
     bellData(end).z = bellData(end-1).z;
-    bellData(end).p = 145;
+    bellData(end).p = 45;
     bellData(end).g = bellData(end-1).g;
     bellData(end).speed = 10;
     
@@ -57,19 +55,19 @@ for i = 1:3
     bellData(end+1).x = bellData(end).x;
     bellData(end).y = bellData(end-1).y;
     bellData(end).z = bellData(end-1).z;
-    bellData(end).p = 215;
+    bellData(end).p = 130;
     bellData(end).g = bellData(end-1).g;
     bellData(end).speed = 10;
 end
 % % End loop
 
 % Put bell down - this puts it back down
-bellData(end+1).x = bellData(end-3).x;
-bellData(end).y = bellData(end-3).y;
-bellData(end).z = bellData(end-3).z;
-bellData(end).p = bellData(end-3).p;
-bellData(end).g = bellData(end-3).g;
-bellData(end).speed = 30;
+bellData(end+1).x = bellData(3).x;
+bellData(end).y = bellData(3).y;
+bellData(end).z = bellData(3).z;
+bellData(end).p = bellData(3).p;
+bellData(end).g = bellData(3).g;
+bellData(end).speed = 20;
 
 % Release bell
 bellData(end+1).x = bellData(end).x;
@@ -89,10 +87,17 @@ bellData(end).speed = 20;
 
 disp(bellData)
 % % % End of bell
-len_x = (bellData.x);
+len_x = (bellData(1).y);
 disp(len_x);
-% %move_array_joints(bellData.p, bellData.x, bellData.y, bellData.z, bellData.g, bellData.speed);
-
+% for i = 1:11
+%     if i >= 5 && i <=8
+%         move_joints_no_cubic(bellData(i).p, bellData(i).x, bellData(i).y, bellData(i).z, bellData(i).g, bellData(i).speed, port_num);
+%         pause(0.3)
+%     else
+%         move_cube_task_2(bellData(i).p, bellData(i).x, bellData(i).y, bellData(i).z, bellData(i).g, bellData(i).speed, port_num);
+%     end
+%     pause(0.2)
+% end
 % % % Take order
 choice = input('What would you like to order? ' , 's');
 % % % End of Take Order
@@ -100,57 +105,71 @@ choice = input('What would you like to order? ' , 's');
 
 % Create an empty struct to hold the pen data
 penData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
-
+close = 215;
 % move to pen above
 penData(end).x = 0;
-penData(end).y = 215;
-penData(end).z = 150;
+penData(end).y = 212;
+penData(end).z = 230;
 penData(end).p = 90;
 penData(end).g = open;
-penData(end).speed = 10;
+penData(end).speed = 30;
 
 % move to pen actual
 penData(end+1).x = penData(end).x;
-penData(end).y = 215;
-penData(end).z = 40;
+penData(end).y = penData(end-1).y;
+penData(end).z = 140;
 penData(end).p = 90;
 penData(end).g = open;
-penData(end).speed = 20;
+penData(end).speed = 30;
 
 % move to pen squeeze
-penData(end+1).x = 0;
-penData(end).y = 215;
-penData(end).z = 40;
+penData(end+1).x = penData(end).x;
+penData(end).y = penData(end-1).y;
+penData(end).z = 140;
 penData(end).p = 90;
 penData(end).g = close;
-penData(end).speed = 10;
+penData(end).speed = 30;
 
 % move to pen after
 penData(end+1).x = 0;
-penData(end).y = 200;
-penData(end).z = 100;
+penData(end).y = penData(end-1).y;
+penData(end).z = 230;
 penData(end).p = 90;
 penData(end).g = close;
-penData(end).speed = 10;
+penData(end).speed = 30;
 
 disp(penData)
 
-% % % End pick up pen
-%move_array_joints(penData.p, penData.x, penData.y, penData.z, penData.g, penData.speed);
+% % % % End pick up pen
+for i = 1:4
+    move_cube_task_2(penData(i).p, penData(i).x, penData(i).y, penData(i).z, penData(i).g, penData(i).speed, port_num);
+    pause(0.2)
+end
+%move_array_joints
 % % % Write name on cup
-name = input('What is your name? ' , 's');
+name = input('How many shots would like in your coffee? ' , 's');
 
 for i=1:length(name)
     name=upper(name);
 end
+if name == "ONE"
+    lettersData = letters('O');
+elseif name == "TWO"
+    name = 'OO';
+    lettersData = letters(name);
+end
 
-lettersData = letters(name);
-% % % % % % % % % % % % % % % % % % % TO DO % % % % % % % % % % % % % % % % % % % % 
-% % % % % % % % % % % % % % % % % % % TO DO % % % % % % % % % % % % % % % % % % % % 
 disp(name)
 % % % End write name on cup
-%move_array_joints(lettersData.p, lettersData.x, lettersData.y, lettersData.z, lettersData.g, lettersData.speed);
-
+% disp(length(lettersData))
+% for i = 1:length(lettersData)
+%     if i ==1
+%         move_cube_task_2(lettersData(i).p, lettersData(i).x, lettersData(i).y, lettersData(i).z, lettersData(i).g, lettersData(i).speed, port_num);
+%     else
+%         Linear_with_steps(lettersData(i).p, lettersData(i).x, lettersData(i).y, lettersData(i).z, lettersData(i).g, lettersData(i).speed, lettersData(i-1).x, lettersData(i-1).y, lettersData(i-1).z, port_num);
+%     end
+%     pause(0.2)
+% end
 % % % Put down pen
 
 % Create an empty struct to hold the pen data
@@ -160,26 +179,26 @@ pen2Data = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
 pen2Data(end).x = lettersData(end).x;
 pen2Data(end).y = lettersData(end-1).y;
-pen2Data(end).z = lettersData(end-1).z;
+pen2Data(end).z = 230;
 pen2Data(end).p = lettersData(end-1).p;
 pen2Data(end).g = lettersData(end-1).g;
 pen2Data(end).speed = 20;
 
 % Go to above pen
-pen2Data(end+1).x = 0;
-pen2Data(end).y = 215;
-pen2Data(end).z = 150;
+pen2Data(end+1).x = -6;
+pen2Data(end).y = 211;
+pen2Data(end).z = 230;
 pen2Data(end).p = 90;
 pen2Data(end).g = close;
-pen2Data(end).speed = 20;
+pen2Data(end).speed = 30;
 
 % Go down to pen
 pen2Data(end+1).x = pen2Data(end).x;
 pen2Data(end).y = pen2Data(end-1).y;
-pen2Data(end).z = 40;
+pen2Data(end).z = 140;
 pen2Data(end).p = pen2Data(end-1).p;
 pen2Data(end).g = close;
-pen2Data(end).speed = 10;
+pen2Data(end).speed = 20;
 
 % Let go of pen2
 pen2Data(end+1).x = pen2Data(end).x;
@@ -187,19 +206,21 @@ pen2Data(end).y = pen2Data(end-1).y;
 pen2Data(end).z = pen2Data(end-1).z;
 pen2Data(end).p = pen2Data(end-1).p;
 pen2Data(end).g = open;
-pen2Data(end).speed = 10;
+pen2Data(end).speed = 20;
 
 % Go back up
 pen2Data(end+1).x = pen2Data(end).x;
 pen2Data(end).y = pen2Data(end-1).y;
-pen2Data(end).z = 150;
+pen2Data(end).z = 230;
 pen2Data(end).p = pen2Data(end-1).p;
 pen2Data(end).g = open;
-pen2Data(end).speed = 10;
+pen2Data(end).speed = 20;
 
 % % % End put down pen
-%move_array_joints(penData.p, penData.x, penData.y, penData.z, penData.g, penData.speed);
-
+for i = 1:5
+    move_cube_task_2(pen2Data(i).p, pen2Data(i).x, pen2Data(i).y, pen2Data(i).z, pen2Data(i).g, pen2Data(i).speed, port_num);
+    pause(0.2)
+end
 % % % Put cup upright
 
 % Create an empty struct to hold the cup data
@@ -525,7 +546,7 @@ stirData(end).speed = 30;
 % % Stir cup loop
 for i = 1:3
 % Do circle in cup
-    circular_movement(stirData(end-1).p, stirData(end).x, stirData(end-1).y, stirData(end-1).z, stirData(end-1).g, 20, 0, 360);
+%     circular_movement(stirData(end-1).p, stirData(end).x, stirData(end-1).y, stirData(end-1).z, stirData(end-1).g, 20, 0, 360);
 end
 % % End of loop
 stirData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
