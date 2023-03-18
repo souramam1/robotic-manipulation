@@ -5,10 +5,10 @@ L4 = 146.6;
 thetaoffset = atan(24/128);
 % disp(thetaoffset);
 
-theta1degg = 90.087891;
-alpha2_vsdegg = -65.654297;
-alpha3_vsdegg = 94.482422;
-alpha4degg = 61.259766;
+theta1degg = 179.121094;
+alpha2_vsdegg = -9.931641;
+alpha3_vsdegg = 147.832031;
+alpha4degg = -46.933594;
 
 
 

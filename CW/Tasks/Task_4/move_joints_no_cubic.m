@@ -67,9 +67,10 @@ disp(alpha4)
 
 
 Dx_in4 = (alpha4 + 180)*4096/360;
-disp(Dx_in4)
-write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in4), 'uint32'));
+Dx_in5 = (grip)*4096/360;
 
+write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in4), 'uint32'));
+write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_GOAL_POSITION, typecast(int32(Dx_in5), 'uint32'));
 
 
 

@@ -3,20 +3,20 @@ close = 215;
 
 
 % Define letter size
-letter_size = 25;
+letter_size = 40;
 
 lettersData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
 % Define start position
 lettersData(end).x = 170;
-lettersData(end).y  = -5;
-lettersData(end).z = 240;
+lettersData(end).y  = 10;
+lettersData(end).z = 200;
 lettersData(end).p = 160;
 lettersData(end).g  = close;
 lettersData(end).speed = 20;
 
 lettersData(end+1).x = 170;
-lettersData(end).y  = -5;
+lettersData(end).y  = 10;
 lettersData(end).z = 150;
 lettersData(end).p = 160;
 lettersData(end).g  = close;
@@ -229,18 +229,20 @@ for i = 1:length(name)
 
 
     % Update start position for next letter
-    lettersData(end+1).x = 170;
-    lettersData(end).y = lettersData(1).y + 10;
-    lettersData(end).z = 200;
-    lettersData(end).p = lettersData(end-1).p;
-    lettersData(end).g = lettersData(end-1).g;
-    lettersData(end).speed = lettersData(end-1).speed;
-    lettersData(end+1).x = 170;
-    lettersData(end).y = lettersData(1).y + 10;
-    lettersData(end).z = 150;
-    lettersData(end).p = lettersData(end-1).p;
-    lettersData(end).g = lettersData(end-1).g;
-    lettersData(end).speed = lettersData(end-1).speed;
+    if i ~= length(name)
+        lettersData(end+1).x = 170;
+        lettersData(end).y = lettersData(1).y + 10;
+        lettersData(end).z = 200;
+        lettersData(end).p = lettersData(end-1).p;
+        lettersData(end).g = lettersData(end-1).g;
+        lettersData(end).speed = lettersData(end-1).speed;
+        lettersData(end+1).x = 170;
+        lettersData(end).y = lettersData(1).y + 10;
+        lettersData(end).z = 150;
+        lettersData(end).p = lettersData(end-1).p;
+        lettersData(end).g = lettersData(end-1).g;
+        lettersData(end).speed = lettersData(end-1).speed;
+    end
 end
 
 
