@@ -1,5 +1,6 @@
 z_vert = 23;
 z_end = 59;
+z_offset = 2;
 
 [port_num] = setup();
 pause_time = 0.2;
@@ -7,19 +8,19 @@ pause_time = 0.2;
 %-------start positions of cubes ---------
 start_x1 = 75 + 7;
 start_y1 = -200 - 12;
-start_z1 = z_vert - 1;
+start_z1 = z_vert - 1 + z_offset;
 start_p1 = 175;
 start_g1 = close;
 
 start_x2 = 225 + 15;
 start_y2 = 0;
-start_z2 = z_vert + 4;
+start_z2 = z_vert + 4 + z_offset;
 start_p2 = 175;
 start_g2 = close;
 
 start_x3 = 150 + 8;
 start_y3 = 150 + 8;
-start_z3 = z_vert + 4;
+start_z3 = z_vert + 4 + z_offset;
 start_p3 = 175;
 start_g3 = close;
 
@@ -27,19 +28,19 @@ start_g3 = close;
 
 end_x1 = 71;
 end_y1 = -190;
-end_z1 = z_end;
+end_z1 = z_end + z_offset;
 end_p1 = 90;
 end_g1 = close;
 
 end_x2 = 215 - 2;
 end_y2 = 4;
-end_z2 = z_end;
+end_z2 = z_end + z_offset;
 end_p2 = 90;
 end_g2 = close;
 
 end_x3 = 140;
 end_y3 = 143;
-end_z3 = z_end;
+end_z3 = z_end + z_offset;
 end_p3 = 90;
 end_g3 = close;
 

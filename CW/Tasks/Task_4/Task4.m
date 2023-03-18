@@ -89,17 +89,18 @@ disp(bellData)
 % % % End of bell
 len_x = (bellData(1).y);
 disp(len_x);
-% for i = 1:11
-%     if i >= 5 && i <=8
-%         move_joints_no_cubic(bellData(i).p, bellData(i).x, bellData(i).y, bellData(i).z, bellData(i).g, bellData(i).speed, port_num);
-%         pause(0.3)
-%     else
-%         move_cube_task_2(bellData(i).p, bellData(i).x, bellData(i).y, bellData(i).z, bellData(i).g, bellData(i).speed, port_num);
-%     end
-%     pause(0.2)
-% end
+% % % % % % % % % % for i = 1:11
+% % % % % % % % % %     if i >= 5 && i <=8
+% % % % % % % % % %         move_joints_no_cubic(bellData(i).p, bellData(i).x, bellData(i).y, bellData(i).z, bellData(i).g, bellData(i).speed, port_num);
+% % % % % % % % % %         pause(0.3)
+% % % % % % % % % %     else
+% % % % % % % % % %         move_cube_task_2(bellData(i).p, bellData(i).x, bellData(i).y, bellData(i).z, bellData(i).g, bellData(i).speed, port_num);
+% % % % % % % % % %     end
+% % % % % % % % % %     pause(0.2)
+% % % % % % % % % % end
 % % % Take order
-choice = input('What would you like to order? ' , 's');
+% % % % % % % % % % choice = input('What would you like to order? ' ,
+% 's');/
 % % % End of Take Order
 % % % Pick up pen
 
@@ -141,25 +142,25 @@ penData(end).speed = 30;
 disp(penData)
 
 % % % % End pick up pen
-for i = 1:4
-    move_cube_task_2(penData(i).p, penData(i).x, penData(i).y, penData(i).z, penData(i).g, penData(i).speed, port_num);
-    pause(0.2)
-end
+% % % % % % % % % % for i = 1:4
+% % % % % % % % % %     move_cube_task_2(penData(i).p, penData(i).x, penData(i).y, penData(i).z, penData(i).g, penData(i).speed, port_num);
+% % % % % % % % % %     pause(0.2)
+% % % % % % % % % % end
 %move_array_joints
 % % % Write name on cup
-name = input('How many shots would like in your coffee? ' , 's');
+% % % % % % % % % % name = input('How many shots would like in your coffee? ' , 's');
 
-for i=1:length(name)
-    name=upper(name);
-end
-if name == "ONE"
-    lettersData = letters('O');
-elseif name == "TWO"
-    name = 'OO';
-    lettersData = letters(name);
-end
-
-disp(name)
+% % % % % % % % % % % % % for i=1:length(name)
+% % % % % % % % % % % % %     name=upper(name);
+% % % % % % % % % % % % % end
+% % % % % % % % % % % % % if name == "ONE"
+% % % % % % % % % % % % %     lettersData = letters('O');
+% % % % % % % % % % % % % elseif name == "TWO"
+% % % % % % % % % % % % %     name = 'OO';
+% % % % % % % % % % % % %     lettersData = letters(name);
+% % % % % % % % % % % % % end
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % disp(name)
 % % % End write name on cup
 % disp(length(lettersData))
 % for i = 1:length(lettersData)
@@ -177,12 +178,12 @@ pen2Data = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
 % Go up with pen
 
-pen2Data(end).x = lettersData(end).x;
-pen2Data(end).y = lettersData(end-1).y;
-pen2Data(end).z = 230;
-pen2Data(end).p = lettersData(end-1).p;
-pen2Data(end).g = lettersData(end-1).g;
-pen2Data(end).speed = 20;
+% % % % % pen2Data(end).x = lettersData(end).x;
+% % % % % pen2Data(end).y = lettersData(end-1).y;
+% % % % % pen2Data(end).z = 230;
+% % % % % pen2Data(end).p = lettersData(end-1).p;
+% % % % % pen2Data(end).g = lettersData(end-1).g;
+% % % % % pen2Data(end).speed = 20;
 
 % Go to above pen
 pen2Data(end+1).x = -6;
@@ -217,17 +218,17 @@ pen2Data(end).g = open;
 pen2Data(end).speed = 20;
 
 % % % End put down pen
-for i = 1:5
-    move_cube_task_2(pen2Data(i).p, pen2Data(i).x, pen2Data(i).y, pen2Data(i).z, pen2Data(i).g, pen2Data(i).speed, port_num);
-    pause(0.2)
-end
+% for i = 1:5
+%     move_cube_task_2(pen2Data(i).p, pen2Data(i).x, pen2Data(i).y, pen2Data(i).z, pen2Data(i).g, pen2Data(i).speed, port_num);
+%     pause(0.2)
+% end
 % % % Put cup upright
 
 % Create an empty struct to hold the cup data
 cupData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
-
+close = 150;
 % Go to above cup
-cupData(end).x = 150;
+cupData(end).x = 215;
 cupData(end).y = 0;
 cupData(end).z = 150;
 cupData(end).p = 180;
@@ -237,7 +238,7 @@ cupData(end).speed = 20;
 % Go down to cup
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 40;
+cupData(end).z = 30;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 20;
@@ -253,14 +254,14 @@ cupData(end).speed = 10;
 % Pick up cup
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = cupData(end-1).z;
-cupData(end).p = 150;
+cupData(end).z = 150;
+cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 20;
 
 % Rotate cup to be upright
-cupData(end+1).x = cupData(end).x;
-cupData(end).y = cupData(end-1).y;
+cupData(end+1).x = 150;
+cupData(end).y = -150;
 cupData(end).z = cupData(end-1).z;
 cupData(end).p = 90;
 cupData(end).g = cupData(end-1).g;
@@ -269,7 +270,7 @@ cupData(end).speed = 30;
 % Gently put cup down
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 60;
+cupData(end).z = 55;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 60;
@@ -286,33 +287,37 @@ cupData(end).speed = 10;
 % Go back up
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = cupData(end-1).z;
+cupData(end).z = 150;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 10;
 
 % % % End put cup upright
 %move_array_joints(cupData.p, cupData.x, cupData.y, cupData.z, cupData.g, cupData.speed);
-
+% % % % % % % % % % % % % for i = 1:8
+% % % % % % % % % % % % %     move_cube_task_2(cupData(i).p, cupData(i).x, cupData(i).y, cupData(i).z, cupData(i).g, cupData(i).speed, port_num);
+% % % % % % % % % % % % %     pause(0.2)
+% % % % % % % % % % % % % end
 % % % Pour kettle into cup
 
 % Create empty arrays for pen data
 kettleData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
+close = 170;
 
 % Go above kettle
 kettleData(end).x = 150;
 kettleData(end).y = 150;
-kettleData(end).z = 150;
+kettleData(end).z = 200;
 kettleData(end).p = 90;
 kettleData(end).g = open;
-kettleData(end).speed = 10;
+kettleData(end).speed = 30;
 
 % Go down to kettle
-kettleData(end+1).x = kettleData(end).x;
-kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 80;
-kettleData(end).p = kettleData(end-1).p;
+kettleData(end+1).x = 174;
+kettleData(end).y = 174;
+kettleData(end).z = 95;
+kettleData(end).p = 70;
 kettleData(end).g = open;
 kettleData(end).speed = 30;
 
@@ -322,7 +327,7 @@ kettleData(end).y = kettleData(end-1).y;
 kettleData(end).z = kettleData(end-1).z;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = close;
-kettleData(end).speed = 10;
+kettleData(end).speed = 20;
 
 % Go up with kettle
 kettleData(end+1).x = kettleData(end).x;
@@ -334,40 +339,40 @@ kettleData(end).speed = 20;
 
 % Bring kettle to cup
 kettleData(end+1).x = 100;
-kettleData(end).y = 0;
-kettleData(end).z = kettleData(end-1).z;
+kettleData(end).y = -100;
+kettleData(end).z = 200;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = kettleData(end-1).g;
-kettleData(end).speed = 20;
+kettleData(end).speed = 60;
 
 % Pour into cup
-kettleData(end+1).x = kettleData(end).x;
-kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 200;
-kettleData(end).p = 135;
+kettleData(end+1).x = 100;
+kettleData(end).y = -100;
+kettleData(end).z = 150;
+kettleData(end).p = 170;
 kettleData(end).g = kettleData(end-1).g;
-kettleData(end).speed = 100;
+kettleData(end).speed = 300;
 
-% Go above kettle position
-kettleData(end+1).x = kettleData(end).x;
-kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = kettleData(end-1).z;
+% Go above cup position
+kettleData(end+1).x = 140;
+kettleData(end).y = -140;
+kettleData(end).z = 150;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 50;
 
 % Bring kettle back to above it starting point
-kettleData(end+1).x = kettleData(end-3).x;
-kettleData(end).y = kettleData(end-3).y;
-kettleData(end).z = kettleData(end-3).z;
-kettleData(end).p = kettleData(end-3).p;
-kettleData(end).g = kettleData(end-3).g;
-kettleData(end).speed = 20;
+kettleData(end+1).x = 174;
+kettleData(end).y = 174;
+kettleData(end).z = 180;
+kettleData(end).p = 70;
+kettleData(end).g = close;
+kettleData(end).speed = 30;
 
 % Put kettle down
 kettleData(end+1).x = kettleData(end).x;
 kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 80;
+kettleData(end).z = 95;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 30;
@@ -382,7 +387,16 @@ kettleData(end).speed = 10;
 
 % % % End pour kettle into cup
 %move_array_joints(kettleData.p, kettleData.x, kettleData.y, kettleData.z, kettleData.g, kettleData.speed);
-
+for i = 1:10
+    disp(i)
+    if i >= 5 && i <= 6
+        Linear_with_steps(kettleData(i).p, kettleData(i).x, kettleData(i).y, kettleData(i).z, kettleData(i).g, kettleData(i).speed, kettleData(i-1).x, kettleData(i-1).y, kettleData(i-1).z, port_num);
+    else
+        move_cube_task_2(kettleData(i).p, kettleData(i).x, kettleData(i).y, kettleData(i).z, kettleData(i).g, kettleData(i).speed, port_num);
+    end
+    
+    pause(0.2)
+end
 % % % Dunk tea thing into cup
 teaData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
