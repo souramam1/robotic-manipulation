@@ -25,30 +25,32 @@ z_p4 = 230;
 pose_p4 = 90;
 
 % move to pen after after%
-x_p5 = 200 - X_offset;
-y_p5 =  60 - Y_offset;
+x_p5 = 200;
+y_p5 =  60;
 z_p5 = 100;
 pose_p5 = 160;
+
 X_offset = pose_p5 * -1.4 + 245;
 Y_offset = pose_p5 * -1.4 + 225;
+
 % before 1st line %
 x_1 = 200 - X_offset;
-y_1 = 60 - Y_offset;
+y_1 = 60 - Y_offset - ((x_1+X_offset)*-20/75 + 160/3);
 z_1 = 73;
 pose_1 = pose_p5;
-
+disp(y_1)
 % end of 1st line %
 x_2 = 200 - X_offset;
-y_2 = 140 - Y_offset;
+y_2 = 140 - Y_offset - ((x_2+X_offset)*-20/75 + 160/3);
 z_2 = 70;
 pose_2 = pose_1;
-
+disp(y_2)
 % end of 2nd line %
 x_3 = 125 - X_offset;
-y_3 = 140 - Y_offset;
+y_3 = 140 - Y_offset - ((x_3+X_offset)*-20/75 + 160/3);
 z_3 = z_2;
 pose_3 = pose_1;
-
+disp(y_3)
 % end of 3rd line (diagonal before circle) %
 x_4 = 200 - X_offset;
 y_4 = 60 - Y_offset;
@@ -66,11 +68,11 @@ y = [y_p, y_p2, y_p3,y_p4,y_p5, y_1, y_2, y_3, y_4];
 z = [z_p, z_p2, z_p3,z_p4,z_p5, z_1, z_2, z_3, z_4];
 gripper = [open, open,close,close,close, close, close, close, close];
 
-disp(length(x))
-disp(length(y))
-disp(length(z))
-disp(length(pose))
-disp(length(gripper))
+% disp(length(x))
+% disp(length(y))
+% disp(length(z))
+% disp(length(pose))
+% disp(length(gripper))
 
 for i = 1:6
 Move_Cube(pose(i), x(i), y(i), z(i), gripper(i));
