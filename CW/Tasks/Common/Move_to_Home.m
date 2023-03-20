@@ -138,16 +138,6 @@ COMM_TX_FAIL                = -1001;        % Communication Tx Failed
 
 
 
-dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
-dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
-
-if dxl_comm_result ~= COMM_SUCCESS
-    fprintf('%s\n', getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
-elseif dxl_error ~= 0
-    fprintf('%s\n', getRxPacketError(PROTOCOL_VERSION, dxl_error));
-else
-    fprintf('Dynamixel has been successfully connected \n');
-end
 
 %----------------------------------------move back to default---------------
 
@@ -160,7 +150,7 @@ write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_PROFILE_VELOCITY, 2
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_ACCELERATION, 10);
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 200);
 
-steps = 50;
+steps = 30;
 time = 3;
 % Default angles
 default_theta1 = 88.769531;

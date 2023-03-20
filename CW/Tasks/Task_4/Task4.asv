@@ -227,7 +227,7 @@ end
 
 % Create an empty struct to hold the cup data
 cupData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
-close = 150;
+close = 145;
 % Go to above cup
 cupData(end).x = 190;
 cupData(end).y = 15;
@@ -239,7 +239,7 @@ cupData(end).speed = 20;
 % Go down to cup
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 45;
+cupData(end).z = 40;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 20;
@@ -255,7 +255,7 @@ cupData(end).speed = 10;
 % Pick up cup
 cupData(end+1).x = 160;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 150;
+cupData(end).z = 120;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 30;
@@ -266,7 +266,7 @@ cupData(end).y = cupData(end-1).y;
 cupData(end).z = cupData(end-1).z;
 cupData(end).p = 90;
 cupData(end).g = cupData(end-1).g;
-cupData(end).speed = 50;
+cupData(end).speed = 30;
 
 % move to position
 cupData(end+1).x = 140;
@@ -274,7 +274,7 @@ cupData(end).y = -140;
 cupData(end).z = 120;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
-cupData(end).speed = 30;
+cupData(end).speed = 20;
 
 % Gently put cup down
 cupData(end+1).x = cupData(end).x;
@@ -308,7 +308,7 @@ for i = 1:9
     pause(0.5)
 end
 % % % Pour kettle into cup
-
+%}
 % Create empty arrays for pen data
 kettleData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
@@ -355,9 +355,9 @@ kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 30;
 
 % Pour into cup
-kettleData(end+1).x = kettleData(end).x;
-kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 150;
+kettleData(end+1).x = 135;
+kettleData(end).y = -135;
+kettleData(end).z = 130;
 kettleData(end).p = 145;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 50;
@@ -663,7 +663,7 @@ for i = 1:11
 end
 % % % Give cup to customer
 giveData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
-close = 160;
+close = 150;
 % Go to above cup
 giveData(end).x = 140;
 giveData(end).y = -140;
@@ -732,7 +732,7 @@ end
 
 
 
-
+Move_to_Home(port_num);
 
 
 

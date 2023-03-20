@@ -1,29 +1,9 @@
-function [] = circular_movement(pose, x, y, z, gripper, radius, start_angle, end_angle)
+function [] = circular_movement(pose, x, y, z, gripper, radius, start_angle, end_angle, port_num)
 % Read the position of the dynamixel horn with the torque off
 % The code executes for a given amount of time then terminates
 
 
-% clc;
-% clear all;
 
-lib_name = '';
-
-if strcmp(computer, 'PCWIN')
-  lib_name = 'dxl_x86_c';
-elseif strcmp(computer, 'PCWIN64')
-  lib_name = 'dxl_x64_c';
-elseif strcmp(computer, 'GLNX86')
-  lib_name = 'libdxl_x86_c';
-elseif strcmp(computer, 'GLNXA64')
-  lib_name = 'libdxl_x64_c';
-elseif strcmp(computer, 'MACI64')
-  lib_name = 'libdxl_mac_c';
-end
-
-% Load Libraries
-if ~libisloaded(lib_name)
-    [notfound, warnings] = loadlibrary(lib_name, 'dynamixel_sdk.h', 'addheader', 'port_handler.h', 'addheader', 'packet_handler.h');
-end
 
 %% ---- Control Table Addresses ---- %%
 
@@ -61,98 +41,6 @@ COMM_SUCCESS                = 0;            % Communication Success result value
 COMM_TX_FAIL                = -1001;        % Communication Tx Failed
 
 %% ------------------ %%
-
-% Initialize PortHandler Structs
-% Set the port path
-% Get methods and members of PortHandlerLinux or PortHandlerWindows
-port_num = portHandler(DEVICENAME);
-
-% Initialize PacketHandler Structs
-packetHandler();
-
-index = 1;
-dxl_comm_result = COMM_TX_FAIL;           % Communication result
-dxl_goal_position = [DXL_MINIMUM_POSITION_VALUE DXL_MAXIMUM_POSITION_VALUE];         % Goal position
-
-dxl_error = 0;                              % Dynamixel error
-dxl_present_position = 0;                   % Present position
-
-
-% Open port
-if (openPort(port_num))
-    fprintf('Port Open\n');
-else
-    unloadlibrary(lib_name);
-    fprintf('Failed to open the port\n');
-    input('Press any key to terminate...\n');
-    return;
-end
-
-% ----- SET MOTION LIMITS ----------- %
-    ADDR_MAX_POS = 48;
-    ADDR_MIN_POS = 52;
-    MAX_POS = 3400;
-    MIN_POS = 600;
-% Set max position limit
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_MAX_POS, MAX_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_MAX_POS, MAX_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_MAX_POS, MAX_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_MAX_POS, MAX_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_MAX_POS, MAX_POS);
-% Set min position limit
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_MIN_POS, MIN_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_MIN_POS, MIN_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_MIN_POS, MIN_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_MIN_POS, MIN_POS);
-    write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_MIN_POS, MIN_POS);
-% ---------------------------------- %
-
-
-% Set port baudrate
-if (setBaudRate(port_num, BAUDRATE))
-    fprintf('Baudrate Set\n');
-else
-    unloadlibrary(lib_name);
-    fprintf('Failed to change the baudrate!\n');
-    input('Press any key to terminate...\n');
-    return;
-end
-
-% Put actuator into Position Control Mode
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_OPERATING_MODE, 3);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_OPERATING_MODE, 3);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_OPERATING_MODE, 3);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_OPERATING_MODE, 3);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_OPERATING_MODE, 3);
-
-
-% Disable Dynamixel Torque
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
-
-%----------------------self move--------------------------------------
-
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-%  write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5, ADDR_PRO_TORQUE_ENABLE, 0); % this is the self move
-
-
-
-dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
-dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
-
-if dxl_comm_result ~= COMM_SUCCESS
-    fprintf('%s\n', getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
-elseif dxl_error ~= 0
-    fprintf('%s\n', getRxPacketError(PROTOCOL_VERSION, dxl_error));
-else
-    fprintf('Dynamixel has been successfully connected \n');
-end
 
 
 write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1, ADDR_PRO_PROFILE_ACCELERATION, 10);
@@ -231,20 +119,9 @@ for i = 1:steps
     write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in4(i))), 'uint32'));
 end
 % Generate a set of points along the line with an exponential spacing
-pause(1);
 
 
 
-
-% Close port
-closePort(port_num);
-fprintf('Port Closed \n');
-
-% Unload Library
-unloadlibrary(lib_name);
-
-close all;
-clear all;
 
 
 end

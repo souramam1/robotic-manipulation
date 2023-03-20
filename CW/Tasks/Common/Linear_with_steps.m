@@ -256,7 +256,7 @@ for j = 1:length(x)
         write4ByteTxRx(port_num,PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_GOAL_POSITION, typecast(int32(real(Dx_in4(i))), 'uint32'));
     end
     % Generate a set of points along the line with an exponential spacing
-    pause(1);
+    pause(0.1);
 
 end
 

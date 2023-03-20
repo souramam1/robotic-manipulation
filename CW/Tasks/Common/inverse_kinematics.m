@@ -22,7 +22,7 @@ p_tot = sqrt(x^2 + y^2);
 %calibration for offset
 z_offset = 27 - 8/106.1*(p_tot);
 % fprintf("z_offset %f\n", z_offset);
-z = z - z_offset;
+% z = z - z_offset;
 
 %%%
 
