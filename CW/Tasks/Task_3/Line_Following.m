@@ -13,7 +13,7 @@ pose_p = 90;
 % move to pen actual%
 x_p2 = 0;
 y_p2 = y_p;
-z_p2 = 80;
+z_p2 = 75;
 pose_p2 = 180;
 
 % move to pen squeeze%
@@ -28,8 +28,8 @@ y_p4 = 140;
 z_p4 = 230;
 pose_p4 = pose_p3;
 
-X_offset = 0;
-Y_offset = 0;
+X_offset = 13;
+Y_offset = 3;
 
 % move to pen after after%
 x_p5 = 200 + X_offset;
@@ -43,19 +43,19 @@ pose_p5 = 90;
 % before 1st line %
 x_1 = 200 + X_offset;% - X_offset
 y_1 = 60 + Y_offset;% - Y_offset - ((x_1+X_offset)*-20/75 + 160/3);
-z_1 = 70;
+z_1 = 78;
 pose_1 = pose_p5;
 disp(y_1)
 % end of 1st line %
 x_2 = 200 + X_offset;% - X_offset;
-y_2 = 140 + Y_offset;% - Y_offset - ((x_2+X_offset)*-20/75 + 160/3);
+y_2 = 140 + Y_offset + 5;% - Y_offset - ((x_2+X_offset)*-20/75 + 160/3);
 z_2 = z_1;
 pose_2 = pose_1;
 disp(y_2)
 % end of 2nd line %
-x_3 = 125  + X_offset ;% - X_offset;
+x_3 = 125  + X_offset -5;% - X_offset;
 y_3 = 140 + Y_offset;%- Y_offset - ((x_3+X_offset)*-20/75 + 160/3);
-z_3 = z_2;
+z_3 = 80;
 pose_3 = pose_1;
 disp(y_3)
 % end of 3rd line (diagonal before circle) %
@@ -93,30 +93,30 @@ end
 
 
 
-circular_movement(pose_4, x_4, y_4, z_4, close, 40, 270, 90, port_num);
+circular_movement(pose_4, x_4, y_4, z_4, close, 40 + 2.5, 270, 90, port_num);
 
 move_cube_task_2(pose_4, x_2, y_2, 130, close, 10, port_num);
 
 %hover above
-x_1 = 0;
-y_1 = 135;
+x_1 = -2;
+y_1 = 155;
 z_1 = 200;
 pose_1 = 180;
 
 %go down
-x_2 = 0;
-y_2 = 145;
-z_2 = 95;
+x_2 = x_1;
+y_2 = y_1;
+z_2 = 83;
 pose_2 = 180;
 
 %open
-x_3 = 0;
+x_3 = x_2;
 y_3 = y_2;
 z_3 = z_2;
 pose_3 = 180;
 
 %go back up
-x_4 = 0;
+x_4 = x_3;
 y_4 = y_3;
 z_4 = 200;
 pose_4 = 180;
