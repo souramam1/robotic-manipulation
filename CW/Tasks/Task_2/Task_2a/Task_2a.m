@@ -103,6 +103,6 @@ end
 
 Move_to_Place(180, 100, 0, 100, close);
 
-Move_to_Home();
+Move_to_Home(port_num);
 
 clear all;
