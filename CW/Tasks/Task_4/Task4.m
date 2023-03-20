@@ -11,7 +11,7 @@ bellData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 % Go to above bell
 bellData.x(end+1) = 0;
 bellData.y(end+1) = -150;
-bellData.z(end+1) = 150;
+bellData.z(end+1) = 130;
 bellData.p(end+1) = 180;
 bellData.g(end+1) = open;
 bellData.speed(end+1) = 30;
@@ -19,7 +19,7 @@ bellData.speed(end+1) = 30;
 % Go down to bell
 bellData(end+1).x = bellData(end).x;
 bellData(end).y = bellData(end-1).y;
-bellData(end).z = 100;
+bellData(end).z = 80;
 bellData(end).p = bellData(end-1).p;
 bellData(end).g = bellData(end-1).g;
 bellData(end).speed = 30;
@@ -36,7 +36,7 @@ bellData(end).speed = 30;
 % Pick up bell
 bellData(end+1).x = bellData(end).x;
 bellData(end).y = bellData(end-1).y;
-bellData(end).z = 150; % When it was above pen
+bellData(end).z = 130; % When it was above pen
 bellData(end).p = bellData(end-1).p;
 bellData(end).g = bellData(end-1).g;
 bellData(end).speed = 20;
@@ -80,7 +80,7 @@ bellData(end).speed = 10;
 % Go back above bell
 bellData(end+1).x = bellData(end).x;
 bellData(end).y = bellData(end-1).y;
-bellData(end).z = 150;
+bellData(end).z = 130;
 bellData(end).p = bellData(end-1).p;
 bellData(end).g = bellData(end-1).g;
 bellData(end).speed = 20;
@@ -111,7 +111,7 @@ close = 215;
 % move to pen above
 penData(end).x = 0;
 penData(end).y = 212;
-penData(end).z = 230;
+penData(end).z = 210;
 penData(end).p = 90;
 penData(end).g = open;
 penData(end).speed = 50;
@@ -119,7 +119,7 @@ penData(end).speed = 50;
 % move to pen actual
 penData(end+1).x = penData(end).x;
 penData(end).y = penData(end-1).y;
-penData(end).z = 140;
+penData(end).z = 120;
 penData(end).p = 90;
 penData(end).g = open;
 penData(end).speed = 30;
@@ -127,7 +127,7 @@ penData(end).speed = 30;
 % move to pen squeeze
 penData(end+1).x = penData(end).x;
 penData(end).y = penData(end-1).y;
-penData(end).z = 140;
+penData(end).z = 120;
 penData(end).p = 90;
 penData(end).g = close;
 penData(end).speed = 30;
@@ -135,7 +135,7 @@ penData(end).speed = 30;
 % move to pen after
 penData(end+1).x = 0;
 penData(end).y = penData(end-1).y;
-penData(end).z = 230;
+penData(end).z = 210;
 penData(end).p = 90;
 penData(end).g = close;
 penData(end).speed = 30;
@@ -181,7 +181,7 @@ pen2Data = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
 pen2Data(end).x = lettersData(end).x;
 pen2Data(end).y = lettersData(end-1).y;
-pen2Data(end).z = 230;
+pen2Data(end).z = 210;
 pen2Data(end).p = lettersData(end-1).p;
 pen2Data(end).g = lettersData(end-1).g;
 pen2Data(end).speed = 20;
@@ -189,7 +189,7 @@ pen2Data(end).speed = 20;
 % Go to above pen
 pen2Data(end+1).x = -2;
 pen2Data(end).y = 211;
-pen2Data(end).z = 230;
+pen2Data(end).z = 210;
 pen2Data(end).p = 90;
 pen2Data(end).g = close;
 pen2Data(end).speed = 30;
@@ -197,7 +197,7 @@ pen2Data(end).speed = 30;
 % Go down to pen
 pen2Data(end+1).x = pen2Data(end).x;
 pen2Data(end).y = pen2Data(end-1).y;
-pen2Data(end).z = 140;
+pen2Data(end).z = 120;
 pen2Data(end).p = pen2Data(end-1).p;
 pen2Data(end).g = close;
 pen2Data(end).speed = 20;
@@ -213,7 +213,7 @@ pen2Data(end).speed = 20;
 % Go back up
 pen2Data(end+1).x = pen2Data(end).x;
 pen2Data(end).y = pen2Data(end-1).y;
-pen2Data(end).z = 230;
+pen2Data(end).z = 210;
 pen2Data(end).p = pen2Data(end-1).p;
 pen2Data(end).g = open;
 pen2Data(end).speed = 20;
@@ -231,7 +231,7 @@ close = 145;
 % Go to above cup
 cupData(end).x = 190;
 cupData(end).y = 15;
-cupData(end).z = 150;
+cupData(end).z = 130;
 cupData(end).p = 180;
 cupData(end).g = open;
 cupData(end).speed = 20;
@@ -239,7 +239,7 @@ cupData(end).speed = 20;
 % Go down to cup
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 40;
+cupData(end).z = 20;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 20;
@@ -255,7 +255,7 @@ cupData(end).speed = 10;
 % Pick up cup
 cupData(end+1).x = 160;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 120;
+cupData(end).z = 100;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 30;
@@ -271,7 +271,7 @@ cupData(end).speed = 30;
 % move to position
 cupData(end+1).x = 140;
 cupData(end).y = -140;
-cupData(end).z = 120;
+cupData(end).z = 100;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 20;
@@ -279,7 +279,7 @@ cupData(end).speed = 20;
 % Gently put cup down
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 55;
+cupData(end).z = 35;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 60;
@@ -296,7 +296,7 @@ cupData(end).speed = 20;
 % Go back up
 cupData(end+1).x = cupData(end).x;
 cupData(end).y = cupData(end-1).y;
-cupData(end).z = 150;
+cupData(end).z = 130;
 cupData(end).p = cupData(end-1).p;
 cupData(end).g = cupData(end-1).g;
 cupData(end).speed = 10;
@@ -317,7 +317,7 @@ close = 170;
 % Go above kettle
 kettleData(end).x = 150;
 kettleData(end).y = 150;
-kettleData(end).z = 200;
+kettleData(end).z = 180;
 kettleData(end).p = 90;
 kettleData(end).g = open;
 kettleData(end).speed = 30;
@@ -325,7 +325,7 @@ kettleData(end).speed = 30;
 % Go down to kettle
 kettleData(end+1).x = 172;
 kettleData(end).y = 176;
-kettleData(end).z = 50;
+kettleData(end).z = 30;
 kettleData(end).p = 90;
 kettleData(end).g = open;
 kettleData(end).speed = 30;
@@ -341,7 +341,7 @@ kettleData(end).speed = 20;
 % Go up with kettle
 kettleData(end+1).x = kettleData(end).x;
 kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 150;
+kettleData(end).z = 130;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 20;
@@ -349,7 +349,7 @@ kettleData(end).speed = 20;
 % Bring kettle to cup
 kettleData(end+1).x = 115;
 kettleData(end).y = -115;
-kettleData(end).z = 150;
+kettleData(end).z = 130;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 30;
@@ -365,7 +365,7 @@ kettleData(end).speed = 50;
 % Go above cup position
 kettleData(end+1).x = kettleData(end).x;
 kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 150;
+kettleData(end).z = 130;
 kettleData(end).p = 90;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 30;
@@ -373,7 +373,7 @@ kettleData(end).speed = 30;
 % Bring kettle back to above it starting point
 kettleData(end+1).x = 173;
 kettleData(end).y = 176;
-kettleData(end).z = 150;
+kettleData(end).z = 130;
 kettleData(end).p = 90;
 kettleData(end).g = close;
 kettleData(end).speed = 30;
@@ -381,7 +381,7 @@ kettleData(end).speed = 30;
 % Put kettle down
 kettleData(end+1).x = kettleData(end).x;
 kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 50;
+kettleData(end).z = 30;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = kettleData(end-1).g;
 kettleData(end).speed = 30;
@@ -397,7 +397,7 @@ kettleData(end).speed = 10;
 % GO UP
 kettleData(end+1).x = kettleData(end).x;
 kettleData(end).y = kettleData(end-1).y;
-kettleData(end).z = 150;
+kettleData(end).z = 130;
 kettleData(end).p = kettleData(end-1).p;
 kettleData(end).g = open;
 kettleData(end).speed = 10;
@@ -420,7 +420,7 @@ teaData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 % Go to tea thing
 teaData(end).x = 10;
 teaData(end).y = 80;
-teaData(end).z = 150;
+teaData(end).z = 130;
 teaData(end).p = 180;
 teaData(end).g = open;
 teaData(end).speed = 30;
@@ -428,7 +428,7 @@ teaData(end).speed = 30;
 % Go down 
 teaData(end+1).x = teaData(end).x;
 teaData(end).y = teaData(end-1).y;
-teaData(end).z = 25;
+teaData(end).z = 5;
 teaData(end).p = teaData(end-1).p;
 teaData(end).g = teaData(end-1).g;
 teaData(end).speed = 30;
@@ -452,7 +452,7 @@ teaData(end).speed = 30;
 % Go up with tea
 teaData(end+1).x = teaData(end).x;
 teaData(end).y = teaData(end-1).y;
-teaData(end).z = 200;
+teaData(end).z = 180;
 teaData(end).p = teaData(end-1).p;
 teaData(end).g = teaData(end-1).g;
 teaData(end).speed = 20;
@@ -471,7 +471,7 @@ for i = 1:3
     % Go down with tea into cup
     teaData(end+1).x = teaData(end).x;
     teaData(end).y = teaData(end-1).y;
-    teaData(end).z = 135;
+    teaData(end).z = 115;
     teaData(end).p = 90;
     teaData(end).g = teaData(end-1).g;
     teaData(end).speed = 20;
@@ -479,7 +479,7 @@ for i = 1:3
     % Go up above tea
     teaData(end+1).x = teaData(end).x;
     teaData(end).y = teaData(end-1).y;
-    teaData(end).z = 200;
+    teaData(end).z = 180;
     teaData(end).p = 90;
     teaData(end).g = teaData(end-1).g;
     teaData(end).speed = 20;
@@ -489,7 +489,7 @@ end
 % go back up
 teaData(end+1).x = teaData(end).x;
 teaData(end).y = teaData(end-1).y;
-teaData(end).z = 150;
+teaData(end).z = 120;
 teaData(end).p = teaData(end-1).p;
 teaData(end).g = teaData(end-1).g;
 teaData(end).speed = 20;
@@ -513,7 +513,7 @@ throwData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 % Shift to be in line with bin
 throwData(end).x = 140;
 throwData(end).y = 0;
-throwData(end).z = 150;
+throwData(end).z = 130;
 throwData(end).p = 180;
 throwData(end).g = close;
 throwData(end).speed = 30;
@@ -521,7 +521,7 @@ throwData(end).speed = 30;
 % Go back to prepare for throw
 throwData(end+1).x = 100;
 throwData(end).y = 0;
-throwData(end).z = 150;
+throwData(end).z = 130;
 throwData(end).p = 215;
 throwData(end).g = close;
 throwData(end).speed = 10;
@@ -529,7 +529,7 @@ throwData(end).speed = 10;
 % Jolt forward and let go of tea bag
 throwData(end+1).x = 200;
 throwData(end).y = 0;
-throwData(end).z = 200;
+throwData(end).z = 180;
 throwData(end).p = 70;
 throwData(end).g = open;
 throwData(end).speed = 5;
@@ -554,7 +554,7 @@ stirData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 % Go to above stirrer
 stirData(end).x = 100;
 stirData(end).y = 100;
-stirData(end).z = 150;
+stirData(end).z = 130;
 stirData(end).p = 180;
 stirData(end).g = open;
 stirData(end).speed = 20;
@@ -562,7 +562,7 @@ stirData(end).speed = 20;
 % Go down to stirrer
 stirData(end+1).x = stirData(end).x;
 stirData(end).y = stirData(end-1).y;
-stirData(end).z = 70;
+stirData(end).z = 50;
 stirData(end).p = stirData(end-1).p;
 stirData(end).g = open;
 stirData(end).speed = 20;
@@ -578,7 +578,7 @@ stirData(end).speed = 20;
 % Go back up
 stirData(end+1).x = stirData(end).x;
 stirData(end).y = stirData(end-1).y;
-stirData(end).z = 200;
+stirData(end).z = 180;
 stirData(end).p = stirData(end-1).p;
 stirData(end).g = stirData(end-1).g;
 stirData(end).speed = 15;
@@ -594,7 +594,7 @@ stirData(end).speed = 30;
 % Stick stirrer into cup
 stirData(end+1).x = stirData(end).x;
 stirData(end).y = stirData(end-1).y;
-stirData(end).z = 50;
+stirData(end).z = 30;
 stirData(end).p = stirData(end-1).p;
 stirData(end).g = stirData(end-1).g;
 stirData(end).speed = 30;
@@ -612,7 +612,7 @@ stirData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 % % Go up with stirrer
 stirData(end).x = 150;
 stirData(end).y = 0;
-stirData(end).z = 200;
+stirData(end).z = 180;
 stirData(end).p = 180;
 stirData(end).g = 180;
 stirData(end).speed = 20;
@@ -628,7 +628,7 @@ stirData(end).speed = 20;
 % Put stirrer down
 stirData(end+1).x = stirData(end).x;
 stirData(end).y = stirData(end-1).y;
-stirData(end).z = 70;
+stirData(end).z = 50;
 stirData(end).p = stirData(end-1).p;
 stirData(end).g = stirData(end-1).g;
 stirData(end).speed = 20;
@@ -644,7 +644,7 @@ stirData(end).speed = 10;
 % Go up
 stirData(end+1).x = stirData(end).x;
 stirData(end).y = stirData(end-1).y;
-stirData(end).z = 150;
+stirData(end).z = 130;
 stirData(end).p = stirData(end-1).p;
 stirData(end).g = stirData(end-1).g ;
 stirData(end).speed = 15;
@@ -667,7 +667,7 @@ close = 150;
 % Go to above cup
 giveData(end).x = 140;
 giveData(end).y = -140;
-giveData(end).z = 150;
+giveData(end).z = 130;
 giveData(end).p = 90;
 giveData(end).g = open;
 giveData(end).speed = 20;
@@ -675,7 +675,7 @@ giveData(end).speed = 20;
 % Go down to cup
 giveData(end+1).x = giveData(end).x;
 giveData(end).y = giveData(end-1).y;
-giveData(end).z = 45;
+giveData(end).z = 25;
 giveData(end).p = giveData(end-1).p;
 giveData(end).g = giveData(end-1).g;
 giveData(end).speed = 20;
@@ -691,7 +691,7 @@ giveData(end).speed = 20;
 % Go up with cup
 giveData(end+1).x = giveData(end).x;
 giveData(end).y = giveData(end-1).y;
-giveData(end).z = 150;
+giveData(end).z = 130;
 giveData(end).p = giveData(end-1).p;
 giveData(end).g = giveData(end-1).g;
 giveData(end).speed = 20;
