@@ -68,7 +68,7 @@ write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4, ADDR_PRO_PROFILE_VELOCITY, 2
 %     end
 %----------------------------------------move linear---------------
 
-steps = 60;
+steps = 150;
 time = 3;
 
 Dx_in1 = [];

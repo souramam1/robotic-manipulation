@@ -63,9 +63,9 @@ end
 
 % Put bell down - this puts it back down
 bellData(end+1).x = bellData(3).x;
-bellData(end).y = bellData(3).y;
-bellData(end).z = bellData(3).z;
-bellData(end).p = bellData(3).p;
+bellData(end).y = bellData(3).y - 4;
+bellData(end).z = bellData(3).z+10;
+bellData(end).p = 180;
 bellData(end).g = bellData(3).g;
 bellData(end).speed = 20;
 
@@ -80,7 +80,7 @@ bellData(end).speed = 10;
 % Go back above bell
 bellData(end+1).x = bellData(end).x;
 bellData(end).y = bellData(end-1).y;
-bellData(end).z = 130;
+bellData(end).z = 160;
 bellData(end).p = bellData(end-1).p;
 bellData(end).g = bellData(end-1).g;
 bellData(end).speed = 20;
@@ -149,14 +149,14 @@ for i = 1:4
 end
 %move_array_joints
 % % % Write name on cup
-name = input('How many shots would like in your coffee? ' , 's');
+name = input('What size tea would you like? ' , 's');
 
 for i=1:length(name)
     name=upper(name);
 end
-if name == "ONE"
+if name == "SMALL"
     lettersData = letters('O');
-elseif name == "TWO"
+elseif name == "LARGE"
     name = 'OO';
     lettersData = letters(name);
 end
@@ -416,7 +416,7 @@ end
 
 % % % Dunk tea thing into cup
 teaData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
-
+% close = 
 % Go to tea thing
 teaData(end).x = 10;
 teaData(end).y = 80;
@@ -452,14 +452,14 @@ teaData(end).speed = 30;
 % Go up with tea
 teaData(end+1).x = teaData(end).x;
 teaData(end).y = teaData(end-1).y;
-teaData(end).z = 180;
+teaData(end).z = 200;
 teaData(end).p = teaData(end-1).p;
 teaData(end).g = teaData(end-1).g;
 teaData(end).speed = 20;
 
 % Go above cup
-teaData(end+1).x = 140;
-teaData(end).y = -140;
+teaData(end+1).x = 136;
+teaData(end).y = -136;
 teaData(end).z = teaData(end-1).z;
 teaData(end).p = teaData(end-1).p;
 teaData(end).g = teaData(end-1).g;
@@ -479,7 +479,7 @@ for i = 1:3
     % Go up above tea
     teaData(end+1).x = teaData(end).x;
     teaData(end).y = teaData(end-1).y;
-    teaData(end).z = 180;
+    teaData(end).z = 190;
     teaData(end).p = 90;
     teaData(end).g = teaData(end-1).g;
     teaData(end).speed = 20;
@@ -489,7 +489,7 @@ end
 % go back up
 teaData(end+1).x = teaData(end).x;
 teaData(end).y = teaData(end-1).y;
-teaData(end).z = 120;
+teaData(end).z = 200;
 teaData(end).p = teaData(end-1).p;
 teaData(end).g = teaData(end-1).g;
 teaData(end).speed = 20;
@@ -502,7 +502,9 @@ for i = 1:length(teaData)
     else
         move_cube_task_2(teaData(i).p, teaData(i).x, teaData(i).y, teaData(i).z, teaData(i).g, teaData(i).speed, port_num);
     end
-    
+    if i == 7
+        pause(3)
+    end
     pause(0.2)
 end
 
@@ -665,8 +667,8 @@ end
 giveData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 close = 150;
 % Go to above cup
-giveData(end).x = 140;
-giveData(end).y = -140;
+giveData(end).x = 130;
+giveData(end).y = -130;
 giveData(end).z = 130;
 giveData(end).p = 90;
 giveData(end).g = open;
@@ -718,7 +720,8 @@ giveData(end).speed = 20;
 for i = 1:length(giveData)
         if i == length(giveData)
             for j = 1:10
-            disp("--------------------------IM GONNA DROP THE CUP--------------------------")
+            disp("--------------------------YOUR TEA IS READY :D--------------------------")
+
             end
             pause(5)
 

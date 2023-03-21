@@ -3,7 +3,7 @@ close = 215;
 
 
 % Define letter size
-letter_size = 40;
+letter_size = 15;
 
 lettersData = struct('x', [], 'y', [], 'z', [], 'p', [], 'g', [], 'speed', []);
 
@@ -17,7 +17,7 @@ lettersData(end).speed = 20;
 
 lettersData(end+1).x = 170;
 lettersData(end).y  = 10;
-lettersData(end).z = 150;
+lettersData(end).z = 130;
 lettersData(end).p = 160;
 lettersData(end).g  = close;
 lettersData(end).speed = 20;
@@ -212,7 +212,6 @@ for i = 1:length(name)
             lettersData(end).speed = lettersData(end-1).speed;
 
         case 'O'
-            disp("AHHHHHHHHHHHHHH")
             lettersData(end+1).x = lettersData(end).x - letter_size;
             lettersData(end).y = lettersData(end-1).y;
             lettersData(end).z = lettersData(end-1).z;
@@ -230,15 +229,21 @@ for i = 1:length(name)
 
     % Update start position for next letter
     if i ~= length(name)
-        lettersData(end+1).x = 170;
-        lettersData(end).y = lettersData(1).y + 10;
-        lettersData(end).z = 200;
+        lettersData(end+1).x = lettersData(end).x;
+        lettersData(end).y = lettersData(end-1).y;
+        lettersData(end).z = lettersData(end-1).z + 100;
         lettersData(end).p = lettersData(end-1).p;
         lettersData(end).g = lettersData(end-1).g;
         lettersData(end).speed = lettersData(end-1).speed;
-        lettersData(end+1).x = 170;
-        lettersData(end).y = lettersData(1).y + 10;
-        lettersData(end).z = 150;
+        lettersData(end+1).x = lettersData(1).x;
+        lettersData(end).y = lettersData(1).y + 5;
+        lettersData(end).z = lettersData(end-1).z;
+        lettersData(end).p = lettersData(end-1).p;
+        lettersData(end).g = lettersData(end-1).g;
+        lettersData(end).speed = lettersData(end-1).speed;
+        lettersData(end+1).x = lettersData(1).x;
+        lettersData(end).y = lettersData(1).y + 5;
+        lettersData(end).z = 130;
         lettersData(end).p = lettersData(end-1).p;
         lettersData(end).g = lettersData(end-1).g;
         lettersData(end).speed = lettersData(end-1).speed;
