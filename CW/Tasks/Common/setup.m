@@ -41,8 +41,8 @@ DXL_ID4                      = 14;
 DXL_ID5                      = 15;
 
 BAUDRATE                    = 115200;
-DEVICENAME                  = '/dev/tty.usbserial-FT6RW7G5';       % Check which port is being used on your controller
-                                            %FT5WJ63F FT6RW7G5 FT5NSOFA ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
+DEVICENAME                  = '/dev/tty.usbserial-FT5NYB6Z';       % Check which port is being used on your controller
+                                            %FT5WJ63F FT6RW7G5 FT5NSOFA FT5NYB6Z ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
 TORQUE_DISABLE              = 0;            % Value for disabling the torque

@@ -13,7 +13,7 @@ start_g1 = close;
 
 start_x2 = 225 + 15;
 start_y2 = 0;
-start_z2 = z_vert + 4;
+start_z2 = z_vert - 5;
 start_p2 = 175;
 start_g2 = close;
 
@@ -31,9 +31,9 @@ end_z1 = z_end;
 end_p1 = 90;
 end_g1 = close;
 
-end_x2 = 215 - 2;
-end_y2 = 4;
-end_z2 = z_end;
+end_x2 = 215 - 2 - 3;
+end_y2 = 0;
+end_z2 = z_end - 10;
 end_p2 = 90;
 end_g2 = close;
 
@@ -58,14 +58,14 @@ Cgripper_1 = [open,open,close,close, close, close, open, open];
 Cspeed_1 = [25, 20, 10, 15, 15, 30, 3, 15];
 
 
-for i = 1:8
-    if i == 6
-        Linear_with_steps(Cpose_1(i), Cx_1(i), Cy_1(i), Cz_1(i), Cgripper_1(i), Cspeed_1(i), Cx_1(i-1), Cy_1(i-1), Cz_1(i-1), port_num)
-    else
-        move_cube_task_2(Cpose_1(i), Cx_1(i), Cy_1(i), Cz_1(i), Cgripper_1(i), Cspeed_1(i), port_num);
-    end
-    pause(pause_time)
-end
+% for i = 1:8
+%     if i == 6
+%         Linear_with_steps(Cpose_1(i), Cx_1(i), Cy_1(i), Cz_1(i), Cgripper_1(i), Cspeed_1(i), Cx_1(i-1), Cy_1(i-1), Cz_1(i-1), port_num)
+%     else
+%         move_cube_task_2(Cpose_1(i), Cx_1(i), Cy_1(i), Cz_1(i), Cgripper_1(i), Cspeed_1(i), port_num);
+%     end
+%     pause(pause_time)
+% end
 
 
 %------------hover above----------
@@ -102,15 +102,15 @@ Cz_2 = [z2_hov,start_z2,start_z2,z2_hov, end_z2_hov, end_z2, end_z2, end_z2_hov]
 Cgripper_2 = [open,open,close,close, close, close, open, open];
 Cspeed_2 = [25, 20, 10, 15, 15, 30, 3, 15];
 
-
-for i = 1:8
-    if i == 6
-        Linear_with_steps(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i), Cspeed_2(i), Cx_2(i-1), Cy_2(i-1), Cz_2(i-1), port_num)
-    else
-        move_cube_task_2(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i), Cspeed_2(i), port_num);
-    end
-    pause(pause_time)
-end
+% 
+% for i = 1:8
+%     if i == 6
+%         Linear_with_steps(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i), Cspeed_2(i), Cx_2(i-1), Cy_2(i-1), Cz_2(i-1), port_num)
+%     else
+%         move_cube_task_2(Cpose_2(i), Cx_2(i), Cy_2(i), Cz_2(i), Cgripper_2(i), Cspeed_2(i), port_num);
+%     end
+%     pause(pause_time)
+% end
 
 
 
@@ -128,15 +128,15 @@ Cgripper_3 = [open,open,close,close, close, close, open, open];
 Cspeed_3 = [25, 20, 10, 15, 15, 30, 3, 15];
 
 
-for i = 1:8
-    if i == 6
-        Linear_with_steps(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i), Cspeed_3(i), Cx_3(i-1), Cy_3(i-1), Cz_3(i-1), port_num);
-
-    else
-        move_cube_task_2(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i), Cspeed_3(i), port_num);
-    end
-    pause(pause_time)
-end
+% for i = 1:8
+%     if i == 6
+%         Linear_with_steps(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i), Cspeed_3(i), Cx_3(i-1), Cy_3(i-1), Cz_3(i-1), port_num);
+% 
+%     else
+%         move_cube_task_2(Cpose_3(i), Cx_3(i), Cy_3(i), Cz_3(i), Cgripper_3(i), Cspeed_3(i), port_num);
+%     end
+%     pause(pause_time)
+% end
 
 % % % % % % % % % % % % % % % NOW STACKING
 
@@ -146,21 +146,21 @@ end
 % stack_start_p3 = 175;
 % stack_start_g3 = close;
 
-stack_end_x1 = 125 + 8;
+stack_end_x1 = 125 + 6;
 stack_end_y1 = 0;
-stack_end_z1 = z_vert + 50;
+stack_end_z1 = z_vert + 50 - 20;
 stack_end_p1 = 175;
 stack_end_g1 = close;
 
-stack_end_x2 = 125 + 8;
+stack_end_x2 = 125 + 6;
 stack_end_y2 = 0 ;
-stack_end_z2 = z_vert + 25;
+stack_end_z2 = z_vert + 25 - 20 + 2;
 stack_end_p2 = 175;
 stack_end_g2 = close;
 
-stack_end_x3 = 125 + 2;
+stack_end_x3 = 125 + 0;
 stack_end_y3 = 0;
-stack_end_z3 = z_vert;
+stack_end_z3 = z_vert - 20;
 stack_end_p3 = 175;
 stack_end_g3 = close;
 
